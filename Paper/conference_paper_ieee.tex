@@ -207,8 +207,6 @@ interpretation. Variable treatment was as follows:
     \item \textit{Location\_Name} and \textit{Located\_City} were excluded
     because they were high-cardinality fields and overlapped with broader
     spatial variables such as \textit{Province} and \textit{Location\_Type}.
-    \item \textit{User\_Country} and \textit{User\_Locale} were excluded
-    because they were sparse and inconsistently formatted.
     \item Raw date fields were not entered directly in the model because their
     information was captured through derived temporal variables.
     \item \textit{Title\_Length} was excluded because it was highly correlated
@@ -218,12 +216,24 @@ interpretation. Variable treatment was as follows:
     (\textit{Travel\_Year\_c}$^2$) to test for nonlinear time trends while
     reducing multicollinearity between polynomial terms.
 \end{itemize}
-The final explanatory design matrix contained 24 predictors: 10 venue-type
-dummies, 7 province dummies, 3 reviewer-tier dummies, and 4 continuous terms
-(\textit{log\_review\_length}, \textit{log\_review\_delay},
-\textit{Travel\_Year\_c}, and \textit{Travel\_Year\_c}$^2$). Reference groups
-were National Parks, Southern Province, and Novice reviewers. Multicollinearity
-was low (max VIF~$= 3.663$).
+The modelling setup was as follows:
+\begin{itemize}
+    \item The outcome for all predictive models was \textbf{Incongruent}
+    (0 = congruent, 1 = incongruent).
+    \item \textit{Sentiment}, \textit{Rating}, and \textit{Rating\_Class} were
+    excluded from the predictor matrix because they were used to construct the
+    outcome and would otherwise introduce data leakage.
+    \item The final explanatory design matrix contained 24 predictors: 10
+    venue-type dummies, 7 province dummies, 3 reviewer-tier dummies, and 4
+    continuous terms (\textit{log\_review\_length},
+    \textit{log\_review\_delay}, \textit{Travel\_Year\_c}, and
+    \textit{Travel\_Year\_c}$^2$).
+    \item Categorical variables were dummy encoded with National Parks,
+    Southern Province, and Novice reviewers as the reference groups.
+    \item Continuous terms were transformed or centred to address skewness and
+    capture temporal structure.
+\end{itemize}
+Multicollinearity was low (max VIF~$= 3.663$).
 
 Bivariate screening used chi-square tests for categorical predictors and the
 Mann--Whitney U test for continuous predictors. Cram\'{e}r's V was reported for

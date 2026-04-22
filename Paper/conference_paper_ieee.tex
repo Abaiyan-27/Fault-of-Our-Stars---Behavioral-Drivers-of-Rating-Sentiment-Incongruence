@@ -61,8 +61,12 @@ Reviewer characteristics also play a critical role. Chua and Banerjee \cite{ref7
 In general, however, the problem of sentiment-rating inconsistency is incompletely understood, especially in emerging tourist destinations. While recent advancements in transformer-based and aspect-based methods facilitate large-scale, precise analysis \cite{ref10,ref11,ref13,ref14} and minimize labeling needs \cite{ref15}, to the best of our knowledge, no existing research attempts to investigate the nature of directionally inconsistent patterns and their fundamental factors using a multi-venue, longitudinal dataset. So, this study tries to address this gap using a large-scale Sri Lankan tourism review dataset spanning diverse attraction types and extended time frame \cite{ref8}, providing new experimental results from an underrepresented context.
 
 \section{Methodology}
-The study used four phases: preprocessing, sentiment model selection, variable
-construction, and statistical analysis. Table~\ref{tab:methodology_overview}
+The methodological contribution of this study is a four-stage framework for
+measuring, structuring, and explaining sentiment--rating incongruence in tourism
+reviews. Rather than treating rating--text mismatch as residual noise, the
+framework operationalizes it as a behavioural outcome, links it to contextual
+and reviewer-level predictors, and evaluates it through complementary
+inferential and predictive models. Table~\ref{tab:methodology_overview}
 summarizes the workflow.
 
 \begin{table}[htbp]
@@ -85,13 +89,18 @@ summarizes the workflow.
 
 \subsection{Dataset and Preprocessing}
 
-This study used the ``Tourism and Travel Reviews: Sri Lankan Destinations''
-dataset from Mendeley Data~\cite{ref8}. The dataset contains 16,156 reviews from
-2010 to 2023 across 11 attraction types in Sri Lanka. Preprocessing checked
-missing values and duplicate records. Date fields were parsed to derive travel
-year and review delay, and negative delays were clipped at zero. Rule-based
-parsing and manual mappings were used to identify province and district.
-\textit{Review\_Length} was defined as the character count of the review text.
+The framework begins by converting a large, venue-diverse review collection into
+an analytical dataset suitable for studying mismatch across space, time, and
+reviewer behaviour. The study used the ``Tourism and Travel Reviews: Sri Lankan
+Destinations'' dataset from Mendeley Data~\cite{ref8}, which contains 16,156
+reviews from 2010 to 2023 across 11 attraction types in Sri Lanka. Missing
+values and duplicates were screened to preserve a consistent observation set.
+Date fields were transformed into travel year and review delay, with negative
+delays clipped at zero, so that temporal effects could be modeled in a coherent
+way. Rule-based parsing and manual mappings converted raw location strings into
+province and district, allowing the analysis to compare incongruence across
+higher-level spatial contexts. \textit{Review\_Length} was defined as the
+character count of the review text.
 \textit{Rating\_Class} grouped star ratings as follows:
 \begin{itemize}
     \item Negative (1--2$\star$)
@@ -99,9 +108,10 @@ parsing and manual mappings were used to identify province and district.
     \item Positive (4--5$\star$)
 \end{itemize}
 The rating values themselves were taken directly from the source dataset rather
-than manually re-annotated. This grouping follows common practice~\cite{ref1,ref2}.
-Table~\ref{tab:dataset_attributes} lists the source columns used to construct the
-analytical dataset.
+than manually re-annotated. This grouping follows common practice~\cite{ref1,ref2}
+and makes the rating channel directly comparable with three-class sentiment
+output. Table~\ref{tab:dataset_attributes} lists the source columns used to
+construct the analytical dataset.
 
 \begin{table}[htbp]
 \caption{Source Columns Used in Analysis}
@@ -127,15 +137,19 @@ Text                & Review body; used for sentiment and review length \\
 
 \subsection{Sentiment Model Selection}
 
+To avoid assuming that ratings already reveal sentiment, the textual sentiment
+channel was established independently through benchmark-based model selection.
 Several transformer-based models were evaluated on a labelled benchmark set of
 1,000 reviews, provided as predefined 700-review training and 300-review
 held-out test splits with one sentiment label per review. Review title and text
-were concatenated as model input. Performance was compared using Macro F1,
+were concatenated as model input, and performance was compared using Macro F1,
 accuracy, and weighted F1. As shown in
 Table~\ref{tab:sentiment_performance}, the pretrained
 \textit{cardiffnlp/twitter-roberta-base-sentiment} model was selected for
-full-dataset labelling. Full-dataset labelling used the same pinned model
-revision with batched inference and a maximum input length of 256 tokens.
+full-dataset labelling. This choice anchors the incongruence measure in an
+empirically validated text classifier rather than an ad hoc sentiment proxy.
+Full-dataset labelling used the same pinned model revision with batched
+inference and a maximum input length of 256 tokens.
 
 
 \begin{table}[htbp]
@@ -158,11 +172,16 @@ Fine-tuned RoBERTa-base     & 0.777 & 0.698 & 0.780 & Higher Mac.\ F1 only \\
 
 \subsection{Analytical Variable Construction}
 
-After sentiment labelling, raw title and text were excluded from the downstream
-models. \textbf{Incongruent} was coded as 1 when \textit{Sentiment} and
-\textit{Rating\_Class} differed, and 0 otherwise. \textbf{Pattern} recorded the
-six directional mismatch types. \textbf{Reviewer\_Tier} grouped
-\textit{User\_Contributions} as follows:
+A central methodological contribution of the study is the explicit
+operationalization of incongruence at multiple levels. After sentiment
+labelling, raw title and text were excluded from downstream models so that the
+analysis focused on structured explanatory variables rather than raw language
+inputs. \textbf{Incongruent} was coded as 1 when \textit{Sentiment} and
+\textit{Rating\_Class} differed, and 0 otherwise, providing a binary measure of
+rating--text mismatch. \textbf{Pattern} recorded the six directional mismatch
+types, allowing the analysis to distinguish different forms of divergence rather
+than collapsing them into a single residual category. \textbf{Reviewer\_Tier}
+grouped \textit{User\_Contributions} as follows:
 \begin{itemize}
     \item Novice (0--5)
     \item Casual (6--20)
@@ -173,8 +192,10 @@ Contributions were highly skewed
 (mean~$= 191.6$, median~$= 54$). \textit{log\_review\_length} and
 \textit{log\_review\_delay} used $\log(1{+}x)$ transformations.
 \textit{Travel\_Year\_c} and \textit{Travel\_Year\_c}$^2$ captured linear and
-nonlinear time effects.
-Table~\ref{tab:derived_variables} lists all constructed variables.
+nonlinear time effects. Together, these variables transform raw platform
+metadata into a model-ready representation of behavioural, textual, temporal,
+and contextual structure. Table~\ref{tab:derived_variables} lists all
+constructed variables.
 
 \begin{table}[htbp]
 \caption{Constructed Analytical Variables}
@@ -201,8 +222,9 @@ Rating\_Class        & 3-class label   & Star rating (1--5) grouped      & Defin
 
 \subsection{Statistical Testing and Predictive Modelling}
 
-The final phase combined statistical testing, predictive modelling, and model
-interpretation. Variable treatment was as follows:
+The final stage turns the constructed variables into an explanatory framework
+for identifying which factors systematically shape incongruence. Variable
+treatment was as follows:
 \begin{itemize}
     \item \textit{Location\_Name} and \textit{Located\_City} were excluded
     because they were high-cardinality fields and overlapped with broader
@@ -235,20 +257,24 @@ The modelling setup was as follows:
 \end{itemize}
 Multicollinearity was low (max VIF~$= 3.663$).
 
-Bivariate screening used chi-square tests for categorical predictors and the
-Mann--Whitney U test for continuous predictors. Cram\'{e}r's V was reported for
-venue-type comparisons. Benjamini--Hochberg correction was applied only to the
-five main screening tests ($q < 0.05$).
+Bivariate screening established which predictors were associated with
+incongruence before multivariable modelling. Chi-square tests were used for
+categorical predictors, the Mann--Whitney U test for continuous predictors, and
+Cram\'{e}r's V for venue-type comparisons. Benjamini--Hochberg correction was
+applied only to the five main screening tests ($q < 0.05$).
 
-Model~1A was a class-balanced logistic regression. It used a stratified 80\%
-training and 20\% test split, 5-fold stratified cross-validation on the training
-set, and AUC-ROC on the held-out test set. Model~1B was an unweighted
-\texttt{statsmodels} logit fit on the full design matrix to estimate adjusted
-odds ratios and 95\% confidence intervals. Model~2 was a Random Forest tuned
-with \texttt{GridSearchCV} on the training set and evaluated on the same test
-set. SHAP values were computed with TreeExplainer on the best Random Forest.
+The modelling strategy deliberately combined interpretability and predictive
+validation. Model~1A was a class-balanced logistic regression used as a linear
+baseline, with a stratified 80\% training and 20\% test split, 5-fold
+stratified cross-validation on the training set, and AUC-ROC on the held-out
+test set. Model~1B was an unweighted \texttt{statsmodels} logit fit on the full
+design matrix to estimate adjusted odds ratios and 95\% confidence intervals.
+Model~2 was a Random Forest tuned with \texttt{GridSearchCV} on the training set
+and evaluated on the same test set. SHAP values were computed with TreeExplainer
+on the best Random Forest to identify the most influential nonlinear effects.
 AUC-ROC was the main performance measure because the outcome was imbalanced.
-Table~\ref{tab:model_framework} summarizes these steps.
+Table~\ref{tab:model_framework} summarizes these components of the analytical
+framework.
 
 \begin{table}[htbp]
 \caption{Modelling and Interpretation Framework}

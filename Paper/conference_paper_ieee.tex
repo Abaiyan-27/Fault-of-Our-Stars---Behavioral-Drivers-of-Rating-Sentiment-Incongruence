@@ -176,11 +176,11 @@ A central methodological contribution of the study is the explicit
 operationalization of incongruence at multiple levels. After sentiment
 labelling, raw title and text were excluded from downstream models so that the
 analysis focused on structured explanatory variables rather than raw language
-inputs. \textbf{Incongruent} was coded as 1 when \textit{Sentiment} and
+inputs. \textit{Incongruent} was coded as 1 when \textit{Sentiment} and
 \textit{Rating\_Class} differed, and 0 otherwise, providing a binary measure of
-rating--text mismatch. \textbf{Pattern} recorded the six directional mismatch
+rating--text mismatch. \textit{Pattern} recorded the six directional mismatch
 types, allowing the analysis to distinguish different forms of divergence rather
-than collapsing them into a single residual category. \textbf{Reviewer\_Tier}
+than collapsing them into a single residual category. \textit{Reviewer\_Tier}
 grouped \textit{User\_Contributions} as follows:
 \begin{itemize}
     \item Novice (0--5)
@@ -240,7 +240,7 @@ treatment was as follows:
 \end{itemize}
 The modelling setup was as follows:
 \begin{itemize}
-    \item The outcome for all predictive models was \textbf{Incongruent}
+    \item The outcome for all predictive models was \textit{Incongruent}
     (0 = congruent, 1 = incongruent).
     \item \textit{Sentiment}, \textit{Rating}, and \textit{Rating\_Class} were
     excluded from the predictor matrix because they were used to construct the
@@ -354,7 +354,7 @@ National Parks & 12.8\% & 1.00 (ref) \\
 These findings indicate that incongruence is not uniformly distributed, motivating a more formal examination of potential predictors.
 
 \subsection{Predictors of Incongruence}
-\textbf{Bivariate screening with FDR correction.} Initial statistical screening was conducted to identify variables associated with incongruence at the bivariate level. As shown in Table~\ref{tab:bivariate_screening}, four of five predictors remain significant after Benjamini--Hochberg FDR correction. Reviewer tier, province, travel year, and review length all show significant associations, while review delay is non-significant ($q = 0.7503$), providing no evidence that the timing between visit and review influences mismatch.
+Initial bivariate screening with FDR correction was conducted to identify variables associated with incongruence at the bivariate level. As shown in Table~\ref{tab:bivariate_screening}, four of five predictors remain significant after Benjamini--Hochberg FDR correction. Reviewer tier, province, travel year, and review length all show significant associations, while review delay is non-significant ($q = 0.7503$), providing no evidence that the timing between visit and review influences mismatch.
 
 \begin{table}[htbp]
 \caption{Bivariate Predictor Screening with Benjamini--Hochberg FDR Correction}
@@ -375,9 +375,9 @@ Review Delay & Mann--Whitney & 0.7503 & 0.7503 & No \\
 }
 \end{table}
 
-\textbf{Incongruence Across Reviewer Tiers.} At the bivariate level, expert reviewers are 1.97 times more likely than novices to produce incongruent reviews, and incongruent reviews are longer at the median (296 vs. 279 characters), suggesting that verbosity increases the likelihood of divergence between text and rating. While these results establish meaningful associations, they do not account for confounding effects between variables. Therefore, multivariate modeling is required to identify independent predictors.
+Across reviewer tiers, expert reviewers are 1.97 times more likely than novices to produce incongruent reviews, and incongruent reviews are longer at the median (296 vs. 279 characters), suggesting that verbosity increases the likelihood of divergence between text and rating. While these results establish meaningful associations, they do not account for confounding effects between variables. Therefore, multivariate modeling is required to identify independent predictors.
 
-\textbf{Multicollinearity check.}VIF analysis shows no multicollinearity (max = 3.663, mean = 2.186)
+VIF analysis shows no multicollinearity (max = 3.663, mean = 2.186).
 
 \subsection{Model-Based Analysis and Interpretation}
 \subsubsection{Model 1A -- Logistic Regression (Baseline Discrimination)}
@@ -416,11 +416,11 @@ SHAP analysis was applied to the Random Forest to interpret feature effects. Mea
 
 \section{Discussion}
 \subsection{Structured Incongruence and Conservative Rating Behaviour }
-An incongruence rate of 18.6\% (\~1 in 5 reviews) indicates systematic mismatch rather than random noise. In Sri Lanka, religious sites may induce high ratings despite mixed sentiment, while museums require multidimensional evaluation not captured by a single score; experienced reviewers may also write positively but rate conservatively. This structured, context-dependent behaviour is further reflected in the Conservative Rater pattern, which combines positive text with moderate ratings. It accounts for 38.4\% of incongruent reviews and represents the dominant mechanism of mismatch. Its prevalence increases from 27.4\% (novice) to 40.4\% (expert), supporting a calibration effect where experienced reviewers apply stricter standards. Together, these findings show that incongruence is systematic rather than random. \textbf{Implication:} Star ratings are unreliable ground-truth labels, and models may misinterpret positive experiences as neutral, particularly for expert-generated content, leading to systematic bias.
+An incongruence rate of 18.6\% (\~1 in 5 reviews) indicates systematic mismatch rather than random noise. In Sri Lanka, religious sites may induce high ratings despite mixed sentiment, while museums require multidimensional evaluation not captured by a single score; experienced reviewers may also write positively but rate conservatively. This structured, context-dependent behaviour is further reflected in the Conservative Rater pattern, which combines positive text with moderate ratings. It accounts for 38.4\% of incongruent reviews and represents the dominant mechanism of mismatch. Its prevalence increases from 27.4\% (novice) to 40.4\% (expert), supporting a calibration effect where experienced reviewers apply stricter standards. Together, these findings show that incongruence is systematic rather than random. This implies that star ratings are unreliable ground-truth labels, and models may misinterpret positive experiences as neutral, particularly for expert-generated content, leading to systematic bias.
 
 
 \subsection{Location Type as a Structural Moderator of Label Reliability}
-Location type is a key determinant of incongruence. Museum reviews show higher odds of mismatch (Adjusted OR = 2.386) relative to national parks, with similar effects for beaches and bodies of water; zoological gardens and waterfalls are also significant. This reflects evaluative complexity, as multidimensional experiences (e.g., museums) are harder to capture with a single rating, while religious sites may show higher mismatch due to social pressures. These results indicate that label reliability varies with context. \textbf{Implication:} Treating all reviews uniformly may introduce systematic bias, highlighting the need for context-aware sentiment models. 
+Location type is a key determinant of incongruence. Museum reviews show higher odds of mismatch (Adjusted OR = 2.386) relative to national parks, with similar effects for beaches and bodies of water; zoological gardens and waterfalls are also significant. This reflects evaluative complexity, as multidimensional experiences (e.g., museums) are harder to capture with a single rating, while religious sites may show higher mismatch due to social pressures. These results indicate that label reliability varies with context. Treating all reviews uniformly may therefore introduce systematic bias, highlighting the need for context-aware sentiment models.
 
 \subsection{Complementary Roles of Linear and Nonlinear Models}
 The multi-model framework demonstrates that linear and nonlinear approaches provide complementary layers of insight rather than competing explanations. The logistic regression baseline achieves a test AUC of 0.584, establishing a stable reference for linear discriminative capacity, while the explanatory logit model identifies 19 statistically significant predictors, providing interpretable effect sizes and clear directional relationships. The Random Forest model achieves a higher test AUC of 0.6095, confirming the presence of nonlinear relationships and interaction effects. However, the modest gain indicates nonlinearities are secondary drivers of incongruence. 

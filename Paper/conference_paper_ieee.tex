@@ -63,13 +63,8 @@ Overall, sentiment--rating incongruence remains insufficiently characterised in 
 \section{Methodology}
 
 This study follows a four-phase process to examine how star ratings and review text
-<<<<<<< HEAD
-differ in sentiment. The phases are: (1) data screening and preprocessing,
-(2) choosing a sentiment model, (3) building analysis variables, and
-(4) running statistical and predictive tests. Table~\ref{tab:methodology_overview}
-=======
 differ in sentiment. Table~\ref{tab:methodology_overview}
->>>>>>> d7b4759 (Revise abstract and methodology sections for clarity; enhance description of sentiment-rating incongruence and analysis process)
+
 gives a summary of the full process.
 
 \begin{table}[htbp]
@@ -81,17 +76,10 @@ gives a summary of the full process.
 \toprule
 \textbf{Ph.} & \textbf{Stage} & \textbf{Method / Tool} & \textbf{Output} \\
 \midrule
-<<<<<<< HEAD
-1 & Data Screening      & Rule-based normalization; temporal and geographic feature extraction & Clean 16,156-review analytical dataset \\
-2 & Model Comparison    & Two pretrained and two fine-tuned RoBERTa variants benchmarked on 1,000 labelled reviews & Sentiment label for each review \\
-3 & Variable Building   & Rating grouping, mismatch typology, reviewer-tier and log transforms & Incongruence target and predictors \\
-4 & Analysis            & Bivariate tests, logistic models, Random Forest, SHAP & Drivers, effect sizes, predictive performance \\
-=======
 1 & Dataset and Preprocessing       & Rule-based normalization, feature engineering          & Clean review dataset \\
 2 & Model Selection     & RoBERTa variants tested on 1,000 labelled reviews      & Sentiment labels for all reviews \\
 3 & Variable Building   & Derived from model output and reviewer data            & Incongruence flag, pattern type, reviewer tier \\
 4 & Analysis            & Chi-square, Mann--Whitney U, Logit, Random Forest, SHAP & Key drivers and effect sizes \\
->>>>>>> d7b4759 (Revise abstract and methodology sections for clarity; enhance description of sentiment-rating incongruence and analysis process)
 \bottomrule
 \end{tabular}%
 }
@@ -149,30 +137,6 @@ Text                & Full review content                                       
 
 \subsection{Sentiment Model Selection}
 
-<<<<<<< HEAD
-To assign a sentiment label (Positive, Neutral, or Negative) to each review, four
-transformer-based models were compared using a manually labelled subset of 1,000
-reviews. This corpus was partitioned into 700 training reviews and a fixed
-300-review test set. Two off-the-shelf checkpoints
-(\textit{gosorio/robertaSentimentFT\_TripAdvisor} and
-\textit{cardiffnlp/twitter-roberta-base-sentiment}) were evaluated directly on the
-held-out test set. Two additional models were fine-tuned on the 700-review training
-portion, using an internal stratified 80/20 train/validation split, chunked inputs,
-class-weighted loss, and early stopping before final evaluation on the same
-300-review test set. The review title and body were joined together as input. For
-long reviews, overlapping chunks were created and chunk-level probabilities were
-averaged to obtain one review-level prediction. Because the three sentiment classes
-were imbalanced, accuracy, macro F1, and weighted F1 were reported together, with
-particular attention to macro F1.
-
-As shown in Table~\ref{tab:sentiment_performance}, the pretrained
-\textit{cardiffnlp/twitter-roberta-base-sentiment} model performed best overall
-(Accuracy $= 0.83$, Weighted F1 $= 0.8051$) and was selected to label all 16,156
-reviews. Although fine-tuned RoBERTa-base achieved a marginally higher Macro F1
-($0.6984$ vs.\ $0.6918$), it had lower accuracy ($0.7767$ vs.\ $0.83$). Given this
-small trade-off and the reproducibility advantage of a fixed pretrained checkpoint,
-the Cardiff model was selected for full-corpus inference.
-=======
 To assign sentiment labels to each review, several transformer-based models were
 compared using a manually labelled subset of 1,000 reviews. The review title and
 text were combined as input, and Macro F1 was used as the main evaluation metric
@@ -180,7 +144,7 @@ due to class imbalance. As shown in Table~\ref{tab:sentiment_performance}, the
 pretrained \textit{cardiffnlp/twitter-roberta-base-sentiment} model showed the best
 overall balance and was selected to label the full dataset. Its use also improves
 reproducibility because it does not require task-specific fine-tuning.
->>>>>>> d7b4759 (Revise abstract and methodology sections for clarity; enhance description of sentiment-rating incongruence and analysis process)
+
 
 \begin{table}[htbp]
 \caption{Sentiment Model Performance (Test Set, $n = 300$)}

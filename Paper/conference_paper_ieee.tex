@@ -61,9 +61,9 @@ Reviewer characteristics also play a critical role. Chua and Banerjee \cite{ref7
 Overall, sentiment--rating incongruence remains insufficiently characterised in tourism attraction contexts, particularly in emerging destinations. Although transformer-based methods enable scalable and fine-grained analysis \cite{ref10}, \cite{ref11}, \cite{ref13}, and reduce annotation requirements \cite{ref15}, no prior study has systematically examined directional mismatch patterns and their structural drivers using a multi-venue, longitudinal dataset. This study addresses this gap using a large-scale Sri Lankan tourism review dataset spanning diverse attraction types and extended temporal coverage \cite{ref8}, providing new empirical evidence from an underrepresented setting.
 
 \section{Methodology}
-This study follows a four-phase process to examine how star ratings and review text
-differ in sentiment. Table~\ref{tab:methodology_overview} gives a summary of the
-full process.
+The study used four phases: preprocessing, sentiment model selection, variable
+construction, and statistical analysis. Table~\ref{tab:methodology_overview}
+summarizes the workflow.
 
 \begin{table}[htbp]
 \caption{Methodology Overview}
@@ -75,7 +75,7 @@ full process.
 \textbf{Ph.} & \textbf{Stage} & \textbf{Method / Tool} & \textbf{Output} \\
 \midrule
 1 & Dataset and Preprocessing       & Rule-based normalization, feature engineering          & Clean review dataset \\
-2 & Model Selection     & RoBERTa variants tested on 1,000 labelled reviews      & Sentiment labels for all reviews \\
+2 & Model Selection     & RoBERTa variants tested on 1,000 labelled reviews & Sentiment labels for all reviews \\
 3 & Variable Building   & Derived from model output and reviewer data            & Incongruence flag, pattern type, reviewer tier \\
 4 & Analysis            & Chi-square, Mann--Whitney U, Logit, Random Forest, SHAP & Key drivers and effect sizes \\
 \bottomrule
@@ -85,48 +85,36 @@ full process.
 
 \subsection{Dataset and Preprocessing}
 
-This study uses the ``Tourism and Travel Reviews: Sri Lankan Destinations'' dataset
-from Mendeley Data~\cite{ref8}, which contains 16,156 reviews collected between
-2010 and 2023. Sri Lanka was chosen because its tourism sector covers a wide range
-of venue types, making it a good setting for studying how ratings and text can
-differ. As a less-studied destination, it also adds new insight to a research area
-dominated by data from Western countries.
-Preprocessing first screened the raw file for missing values and duplicate records,
-then focused on deterministic feature construction. Date fields were parsed to
-extract the year of travel and the number of days between the visit and when the
-review was posted, with negative delays clipped at zero. Location text was processed
-using fixed rules and manual mappings to identify the province and district. The
-reviewer's country was inferred from profile location using an offline-first alias
-dictionary and local resolution cache, with locale-based fallback when location text
-remained unresolved.
-\textit{Review\_Length} was calculated from the review text, and \textit{Rating\_Class}
-was created by grouping star ratings into Positive (4--5$\star$), Neutral (3$\star$),
-and Negative (1--2$\star$), following common practice~\cite{ref1,ref2}.
-Table~\ref{tab:dataset_attributes} lists all 14 original features in the dataset.
+This study used the ``Tourism and Travel Reviews: Sri Lankan Destinations''
+dataset from Mendeley Data~\cite{ref8}. The dataset contains 16,156 reviews from
+2010 to 2023 across 11 attraction types in Sri Lanka. Preprocessing checked
+missing values and duplicate records. Date fields were parsed to derive travel
+year and review delay, and negative delays were clipped at zero. Rule-based
+parsing and manual mappings were used to identify province and district.
+\textit{Review\_Length} was defined as the character count of the review text.
+\textit{Rating\_Class} grouped star ratings into Positive
+(4--5$\star$), Neutral (3$\star$), and Negative (1--2$\star$), following common
+practice~\cite{ref1,ref2}.
+Table~\ref{tab:dataset_attributes} lists the source columns used to construct the
+analytical dataset.
 
 \begin{table}[htbp]
-\caption{Dataset Attributes}
+\caption{Source Columns Used in Analysis}
 \label{tab:dataset_attributes}
 \centering
 \resizebox{\columnwidth}{!}{%
-\begin{tabular}{L{2.6cm}L{3.8cm}L{1.6cm}}
+\begin{tabular}{L{3.0cm}L{4.8cm}}
 \toprule
-\textbf{Feature} & \textbf{Description} & \textbf{Type} \\
+\textbf{Feature} & \textbf{Description} \\
 \midrule
-Location\_Name      & Name of the tourism attraction                            & Categorical \\
-Located\_City       & City where the attraction is located                      & Categorical \\
-Location            & Raw location text (city, district, province)              & Categorical \\
-Location\_Type      & Type of attraction (museum, beach, temple, etc.)          & Categorical \\
-User\_ID            & Unique ID for each reviewer                               & Categorical \\
-User\_Location      & Reviewer's location (free text)                           & Categorical \\
-User\_Locale        & Language or locale setting                                & Categorical \\
-User\_Contributions & Total number of reviews posted by the reviewer            & Numerical   \\
-Travel\_Date        & Date of the visit                                         & Temporal \\
-Published\_Date     & Date the review was posted                                & Temporal \\
-Rating              & Star rating given (1--5)                                  & Ordinal \\
-Helpful\_Votes      & Number of users who marked the review as helpful          & Numerical   \\
-Title               & Short heading of the review                               & Text \\
-Text                & Full review content                                       & Text \\
+Location            & Raw location text used to derive province and district \\
+Location\_Type      & Type of attraction (museum, beach, temple, etc.) \\
+User\_Contributions & Total number of reviews posted by the reviewer \\
+Travel\_Date        & Date of the visit; used to derive travel year \\
+Published\_Date     & Date of review posting; used to derive review delay \\
+Rating              & Star rating used to create Rating\_Class \\
+Title               & Review title; combined with text for sentiment inference \\
+Text                & Review body; used for sentiment and review length \\
 \bottomrule
 \end{tabular}%
 }
@@ -134,13 +122,16 @@ Text                & Full review content                                       
 
 \subsection{Sentiment Model Selection}
 
-To assign sentiment labels to each review, several transformer-based models were
-compared using a manually labelled subset of 1,000 reviews. The review title and
-text were combined as input, and Macro F1 was used as the main evaluation metric
-due to class imbalance. As shown in Table~\ref{tab:sentiment_performance}, the
-pretrained \textit{cardiffnlp/twitter-roberta-base-sentiment} model showed the best
-overall balance and was selected to label the full dataset. Its use also improves
-reproducibility because it does not require task-specific fine-tuning.
+Several transformer-based models were evaluated on 1,000 manually labelled
+reviews, split into 700 training cases and 300 held-out test cases. Review title
+and text were concatenated as model input. Performance was compared using Macro
+F1, accuracy, and weighted F1. As shown in
+Table~\ref{tab:sentiment_performance}, the pretrained
+\textit{cardiffnlp/twitter-roberta-base-sentiment} model was selected because it
+gave the best overall balance across metrics. Fine-tuned RoBERTa-base achieved a
+slightly higher Macro F1, but Cardiff produced higher accuracy and weighted F1.
+Full-dataset labelling used the same pinned model revision with batched
+inference and a maximum input length of 256 tokens.
 
 
 \begin{table}[htbp]
@@ -155,7 +146,7 @@ reproducibility because it does not require task-specific fine-tuning.
 gosorio/robertaSentimentFT  & 0.730 & 0.281 & 0.616 & Rejected \\
 cardiffnlp/twitter-roberta (pretrained) & 0.830 & 0.692 & 0.805 & \textbf{Selected} \\
 Fine-tuned Cardiff RoBERTa  & 0.733 & 0.677 & 0.758 & Lower overall fit \\
-Fine-tuned RoBERTa-base     & 0.777 & 0.698 & 0.780 & Higher Mac.\ F1, lower Acc. \\
+Fine-tuned RoBERTa-base     & 0.777 & 0.698 & 0.780 & Higher Mac.\ F1 only \\
 \bottomrule
 \end{tabular}%
 }
@@ -163,17 +154,16 @@ Fine-tuned RoBERTa-base     & 0.777 & 0.698 & 0.780 & Higher Mac.\ F1, lower Acc
 
 \subsection{Analytical Variable Construction}
 
-Once sentiment labels were generated, the raw title and text fields were not used as
-direct predictors in the downstream statistical models. The analysis variables were
-then constructed from model output and reviewer metadata. \textbf{Incongruent}
-(yes/no) flags reviews where the star-rating class and predicted sentiment do not
-match. \textbf{Pattern} (six types) records the direction of the mismatch, for
-example a positive review with a low rating. \textbf{Reviewer\_Tier} groups
-reviewers by how many reviews they have posted — Novice (0--5), Casual (6--20),
-Active (21--100), and Expert (101+). This grouping reflects the wide spread in
-contribution counts (mean~$= 191.6$, median~$= 54$). Review length and posting
-delay were transformed using $\log(1{+}x)$ to correct for skewed distributions, and
-travel year was centred and squared to capture potential nonlinear time effects.
+After sentiment labelling, raw title and text were excluded from the downstream
+models. \textbf{Incongruent} was coded as 1 when \textit{Sentiment} and
+\textit{Rating\_Class} differed, and 0 otherwise. \textbf{Pattern} recorded the
+six directional mismatch types. \textbf{Reviewer\_Tier} grouped
+\textit{User\_Contributions} into Novice (0--5), Casual (6--20), Active
+(21--100), and Expert (101+). Contributions were highly skewed
+(mean~$= 191.6$, median~$= 54$). \textit{log\_review\_length} and
+\textit{log\_review\_delay} used $\log(1{+}x)$ transformations.
+\textit{Travel\_Year\_c} and \textit{Travel\_Year\_c}$^2$ captured linear and
+nonlinear time effects.
 Table~\ref{tab:derived_variables} lists all constructed variables.
 
 \begin{table}[htbp]
@@ -187,9 +177,9 @@ Table~\ref{tab:derived_variables} lists all constructed variables.
 \midrule
 Sentiment            & 3-class label   & Model output                    & Defines incongruence \\
 Incongruent          & Binary (0/1)    & Sentiment vs.\ Rating\_Class    & Target variable \\
-Pattern              & 6-category      & Sentiment $\times$ Rating       & Mismatch typology \\
+Pattern              & 6-category      & Sentiment $\times$ Rating\_Class & Mismatch typology \\
 Reviewer\_Tier       & 4-level ordinal & Contributions (grouped)         & Predictor \\
-log\_review\_length  & Continuous      & Review length, $\log(1{+}x)$   & Predictor \\
+log\_review\_length  & Continuous      & Review length (characters), $\log(1{+}x)$ & Predictor \\
 log\_review\_delay   & Continuous      & Visit--post gap, $\log(1{+}x)$ & Predictor \\
 Travel\_Year\_c      & Continuous      & Travel year, centred            & Time predictor \\
 Travel\_Year\_c$^2$  & Continuous      & Travel\_Year\_c squared         & Nonlinear time \\
@@ -201,33 +191,32 @@ Rating\_Class        & 3-class label   & Star rating (1--5) grouped      & Defin
 
 \subsection{Statistical Testing and Predictive Modelling}
 
-Before modelling, high-cardinality identifiers (location name and city), sparse
-user-origin variables (user country and locale), raw date fields already represented
-by derived temporal variables, and title length were excluded from the modelling
-matrix. Travel year was modelled as both a linear and a quadratic term to check
-whether temporal trends changed in a nonlinear way.
+Location name, city, user country, user locale, raw date fields, and title
+length were excluded from the modelling matrix. The final explanatory design
+matrix contained 24 predictors: 10 venue-type dummies, 7 province dummies, 3
+reviewer-tier dummies, and 4 continuous terms
+(\textit{log\_review\_length}, \textit{log\_review\_delay},
+\textit{Travel\_Year\_c}, and \textit{Travel\_Year\_c}$^2$). Reference groups
+were National Parks, Southern Province, and Novice reviewers. Multicollinearity
+was low (max VIF~$= 3.663$).
 
 Bivariate screening used chi-square tests for categorical predictors and the
-Mann--Whitney U test for continuous predictors, with Cram\'{e}r's V reported as the
-effect-size measure for venue-type comparisons. Only the five bivariate screening
-tests were adjusted for multiple comparisons using the Benjamini--Hochberg method
-(threshold: $q < 0.05$). The final explanatory design matrix contained 24
-dummy-coded predictors, with National Parks, Southern Province, and Novice
-reviewers as the reference groups. A variance inflation check confirmed no
-problematic overlap between predictors (max VIF~$= 3.663$). For predictive
-evaluation, the full dataset was split once into stratified 80\% training and 20\%
-test partitions. Model~1A used class-balanced logistic regression with 5-fold
-stratified cross-validation on the training set and AUC-ROC on the common held-out
-test set. Model~1B fit an unweighted \texttt{statsmodels} logit to estimate adjusted
-odds ratios and 95\% confidence intervals. Model~2 used a Random Forest tuned with
-\texttt{GridSearchCV} on the training set only and was then evaluated on the same
-held-out test set. SHAP values were computed with TreeExplainer on the best Random
-Forest to interpret nonlinear effects. AUC-ROC was the main performance measure
-because the incongruence outcome was imbalanced.
-Table~\ref{tab:model_framework} describes the three models used.
+Mann--Whitney U test for continuous predictors. Cram\'{e}r's V was reported for
+venue-type comparisons. Benjamini--Hochberg correction was applied only to the
+five main screening tests ($q < 0.05$).
+
+Model~1A was a class-balanced logistic regression. It used a stratified 80\%
+training and 20\% test split, 5-fold stratified cross-validation on the training
+set, and AUC-ROC on the held-out test set. Model~1B was an unweighted
+\texttt{statsmodels} logit fit on the full design matrix to estimate adjusted
+odds ratios and 95\% confidence intervals. Model~2 was a Random Forest tuned
+with \texttt{GridSearchCV} on the training set and evaluated on the same test
+set. SHAP values were computed with TreeExplainer on the best Random Forest.
+AUC-ROC was the main performance measure because the outcome was imbalanced.
+Table~\ref{tab:model_framework} summarizes these steps.
 
 \begin{table}[htbp]
-\caption{Predictive Modelling Framework}
+\caption{Modelling and Interpretation Framework}
 \label{tab:model_framework}
 \centering
 \resizebox{\columnwidth}{!}{%
@@ -236,9 +225,9 @@ Table~\ref{tab:model_framework} describes the three models used.
 \textbf{Model} & \textbf{Purpose} & \textbf{Metric} & \textbf{Key Detail} \\
 \midrule
 1A — Logistic Reg.       & Linear baseline performance     & AUC-ROC       & Stratified 80/20 split; balanced classes; 5-fold CV \\
-1B — Logit (statsmodels) & Identifies independent drivers  & 95\% CI       & Unweighted adjusted odds ratios for inference \\
+1B — Logit (statsmodels) & Identifies independent drivers  & 95\% CI       & Unweighted inference model fit on full design matrix \\
 2 — Random Forest        & Captures complex relationships  & AUC-ROC       & GridSearchCV on training set; same held-out test set \\
-SHAP                     & Explains model predictions      & Mean $|\phi|$ & TreeExplainer on the best Random Forest \\
+SHAP (post hoc)          & Explains model predictions      & Mean $|\phi|$ & TreeExplainer on the best Random Forest \\
 \bottomrule
 \end{tabular}%
 }

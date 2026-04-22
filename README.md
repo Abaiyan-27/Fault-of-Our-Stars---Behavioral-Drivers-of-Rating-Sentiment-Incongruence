@@ -1,9 +1,14 @@
 # Group-J---Research-Paper
 
-Final implementation of the Tourism Review Analysis Framework is available as a
-reproducible script:
+This repository contains two related workflows:
 
-- `scripts/final_tourism_analysis_framework.py`
+- Conference paper analysis: the preprocessing, sentiment-labeling, validation,
+  and modelling steps documented in `Tourism Analysis 1 - Dataset Preparation.ipynb`,
+  `Tourism Analysis 2 - Model Feature Generation.ipynb`,
+  `tourism analysis 4 - Model validation.ipynb`, and `Tourism Analysis 3.ipynb`.
+- Extended framework script: `scripts/final_tourism_analysis_framework.py`.
+  This script is a broader exploratory pipeline and is not the source of the
+  final conference-paper results.
 
 ## Notebook 1 Reproducibility Update
 
@@ -77,7 +82,7 @@ If you want a lighter install for quick testing (no transformer models), use:
 python -m pip install pandas numpy pycountry scikit-learn python-dotenv
 ```
 
-## Run Final Framework
+## Run Extended Framework Script
 
 ```bash
 python scripts/final_tourism_analysis_framework.py \
@@ -95,7 +100,7 @@ python scripts/final_tourism_analysis_framework.py --disable-models
 python scripts/final_tourism_analysis_framework.py --disable-topic
 ```
 
-## Models Used (Final)
+## Models Used (Extended Script)
 
 Sentiment ensemble:
 

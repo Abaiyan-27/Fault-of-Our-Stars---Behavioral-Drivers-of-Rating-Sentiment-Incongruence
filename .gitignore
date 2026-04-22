@@ -97,3 +97,4 @@ temp/
 *.toc
 *.out
 *.pdf
+.codex

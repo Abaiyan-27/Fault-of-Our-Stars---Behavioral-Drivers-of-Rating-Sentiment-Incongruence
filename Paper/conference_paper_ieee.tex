@@ -64,6 +64,7 @@ Overall, sentiment--rating incongruence remains insufficiently characterised in 
 
 This study follows a four-phase process to examine how star ratings and review text
 differ in sentiment. Table~\ref{tab:methodology_overview}
+
 gives a summary of the full process.
 
 \begin{table}[htbp]
@@ -93,11 +94,14 @@ of venue types, making it a good setting for studying how ratings and text can
 differ. As a less-studied destination, it also adds new insight to a research area
 dominated by data from Western countries.
 
-The cleaning process covered missing value removal, duplicate checking, and feature
-creation. Date fields were used to extract the year of travel and the number of days
-between the visit and when the review was posted. Location text was processed using
-fixed rules to identify the province and district. The reviewer's country was
-identified from their profile location using a matching dictionary.
+Preprocessing first screened the raw file for missing values and duplicate records,
+then focused on deterministic feature construction. Date fields were parsed to
+extract the year of travel and the number of days between the visit and when the
+review was posted, with negative delays clipped at zero. Location text was processed
+using fixed rules and manual mappings to identify the province and district. The
+reviewer's country was inferred from profile location using an offline-first alias
+dictionary and local resolution cache, with locale-based fallback when location text
+remained unresolved.
 \textit{Review\_Length} was calculated from the review text, and \textit{Rating\_Class}
 was created by grouping star ratings into Positive (4--5$\star$), Neutral (3$\star$),
 and Negative (1--2$\star$), following common practice~\cite{ref1,ref2}.
@@ -120,12 +124,12 @@ User\_ID            & Unique ID for each reviewer                               
 User\_Location      & Reviewer's location (free text)                           & Categorical \\
 User\_Locale        & Language or locale setting                                & Categorical \\
 User\_Contributions & Total number of reviews posted by the reviewer            & Numerical   \\
-Travel\_Date        & Date of the visit                                         & Categorical \\
-Published\_Date     & Date the review was posted                                & Categorical \\
-Rating              & Star rating given (1--5)                                  & Categorical \\
+Travel\_Date        & Date of the visit                                         & Temporal \\
+Published\_Date     & Date the review was posted                                & Temporal \\
+Rating              & Star rating given (1--5)                                  & Ordinal \\
 Helpful\_Votes      & Number of users who marked the review as helpful          & Numerical   \\
-Title               & Short heading of the review                               & Categorical \\
-Text                & Full review content                                       & Categorical \\
+Title               & Short heading of the review                               & Text \\
+Text                & Full review content                                       & Text \\
 \bottomrule
 \end{tabular}%
 }
@@ -141,6 +145,7 @@ pretrained \textit{cardiffnlp/twitter-roberta-base-sentiment} model showed the b
 overall balance and was selected to label the full dataset. Its use also improves
 reproducibility because it does not require task-specific fine-tuning.
 
+
 \begin{table}[htbp]
 \caption{Sentiment Model Performance (Test Set, $n = 300$)}
 \label{tab:sentiment_performance}
@@ -152,8 +157,8 @@ reproducibility because it does not require task-specific fine-tuning.
 \midrule
 gosorio/robertaSentimentFT  & 0.730 & 0.281 & 0.616 & Rejected \\
 cardiffnlp/twitter-roberta (pretrained) & 0.830 & 0.692 & 0.805 & \textbf{Selected} \\
-Fine-tuned Cardiff RoBERTa  & 0.733 & 0.677 & 0.758 & Lower stability \\
-Fine-tuned RoBERTa-base     & 0.777 & 0.698 & 0.780 & Slightly lower balance \\
+Fine-tuned Cardiff RoBERTa  & 0.733 & 0.677 & 0.758 & Lower overall fit \\
+Fine-tuned RoBERTa-base     & 0.777 & 0.698 & 0.780 & Higher Mac.\ F1, lower Acc. \\
 \bottomrule
 \end{tabular}%
 }
@@ -161,16 +166,17 @@ Fine-tuned RoBERTa-base     & 0.777 & 0.698 & 0.780 & Slightly lower balance \\
 
 \subsection{Analytical Variable Construction}
 
-Once sentiment labels were generated, the review title and text columns were removed.
-Three new variables were then built directly from the data without any further
-modelling: (i)~\textbf{Incongruent} (yes/no): flags reviews where the star rating
-class and predicted sentiment do not match; (ii)~\textbf{Pattern} (six types):
-records the direction of the mismatch, for example a positive review with a low
-rating; and (iii)~\textbf{Reviewer\_Tier} (four levels): groups reviewers by how
-many reviews they have posted — Novice (0--5), Casual (6--20), Active (21--100), and
-Expert (101+). This grouping reflects the wide spread in contribution counts
-(mean~$= 191.6$, median~$= 54$). Review length and posting delay were transformed
-using $\log(1{+}x)$ to correct for skewed distributions.
+Once sentiment labels were generated, the raw title and text fields were not used as
+direct predictors in the downstream statistical models. The analysis variables were
+then constructed from model output and reviewer metadata. \textbf{Incongruent}
+(yes/no) flags reviews where the star-rating class and predicted sentiment do not
+match. \textbf{Pattern} (six types) records the direction of the mismatch, for
+example a positive review with a low rating. \textbf{Reviewer\_Tier} groups
+reviewers by how many reviews they have posted — Novice (0--5), Casual (6--20),
+Active (21--100), and Expert (101+). This grouping reflects the wide spread in
+contribution counts (mean~$= 191.6$, median~$= 54$). Review length and posting
+delay were transformed using $\log(1{+}x)$ to correct for skewed distributions, and
+travel year was centred and squared to capture potential nonlinear time effects.
 Table~\ref{tab:derived_variables} lists all constructed variables.
 
 \begin{table}[htbp]
@@ -198,20 +204,29 @@ Rating\_Class        & 3-class label   & Star rating (1--5) grouped      & Defin
 
 \subsection{Statistical Testing and Predictive Modelling}
 
-Before modelling, several features were removed: location name and city (too many
-unique values), user country and locale (incomplete data), date fields already
-covered by derived time variables, and title length (too closely linked to review
-length). Travel year was modelled as both a straight line and a curve to check
-whether trends changed over time in a non-straight pattern.
+Before modelling, high-cardinality identifiers (location name and city), sparse
+user-origin variables (user country and locale), raw date fields already represented
+by derived temporal variables, and title length were excluded from the modelling
+matrix. Travel year was modelled as both a linear and a quadratic term to check
+whether temporal trends changed in a nonlinear way.
 
-Chi-square tests measured how strongly categorical variables relate to incongruence,
-with Cram\'{e}r's V reporting effect size. The Mann--Whitney U test was used for
-continuous variables. All p-values were corrected for multiple testing using the
-Benjamini--Hochberg method (threshold: $q < 0.05$). The 24 predictors were
-coded as dummy variables (reference groups: National Parks, Southern Province,
-Novice reviewers). A variance inflation check confirmed no problematic overlap
-between predictors (max VIF~$= 3.663$). AUC-ROC was the main measure of model
-performance as it handles unequal class sizes well.
+Bivariate screening used chi-square tests for categorical predictors and the
+Mann--Whitney U test for continuous predictors, with Cram\'{e}r's V reported as the
+effect-size measure for venue-type comparisons. Only the five bivariate screening
+tests were adjusted for multiple comparisons using the Benjamini--Hochberg method
+(threshold: $q < 0.05$). The final explanatory design matrix contained 24
+dummy-coded predictors, with National Parks, Southern Province, and Novice
+reviewers as the reference groups. A variance inflation check confirmed no
+problematic overlap between predictors (max VIF~$= 3.663$). For predictive
+evaluation, the full dataset was split once into stratified 80\% training and 20\%
+test partitions. Model~1A used class-balanced logistic regression with 5-fold
+stratified cross-validation on the training set and AUC-ROC on the common held-out
+test set. Model~1B fit an unweighted \texttt{statsmodels} logit to estimate adjusted
+odds ratios and 95\% confidence intervals. Model~2 used a Random Forest tuned with
+\texttt{GridSearchCV} on the training set only and was then evaluated on the same
+held-out test set. SHAP values were computed with TreeExplainer on the best Random
+Forest to interpret nonlinear effects. AUC-ROC was the main performance measure
+because the incongruence outcome was imbalanced.
 Table~\ref{tab:model_framework} describes the three models used.
 
 \begin{table}[htbp]
@@ -223,10 +238,10 @@ Table~\ref{tab:model_framework} describes the three models used.
 \toprule
 \textbf{Model} & \textbf{Purpose} & \textbf{Metric} & \textbf{Key Detail} \\
 \midrule
-1A — Logistic Reg.       & Linear baseline performance     & AUC-ROC       & Class-balanced; 5-fold cross-validation \\
-1B — Logit (statsmodels) & Identifies independent drivers  & 95\% CI       & Adjusted odds ratios; controls for confounding \\
-2 — Random Forest        & Captures complex relationships  & AUC-ROC       & Detects interactions; supports logit findings \\
-SHAP                     & Explains model predictions      & Mean $|\phi|$ & Shows how each feature influences the outcome \\
+1A — Logistic Reg.       & Linear baseline performance     & AUC-ROC       & Stratified 80/20 split; balanced classes; 5-fold CV \\
+1B — Logit (statsmodels) & Identifies independent drivers  & 95\% CI       & Unweighted adjusted odds ratios for inference \\
+2 — Random Forest        & Captures complex relationships  & AUC-ROC       & GridSearchCV on training set; same held-out test set \\
+SHAP                     & Explains model predictions      & Mean $|\phi|$ & TreeExplainer on the best Random Forest \\
 \bottomrule
 \end{tabular}%
 }

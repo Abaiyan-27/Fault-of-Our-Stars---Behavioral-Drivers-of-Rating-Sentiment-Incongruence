@@ -31,7 +31,7 @@
 \maketitle
 
 \begin{abstract}
-Star ratings are widely used as ground-truth sentiment labels in opinion mining, yet their alignment with review text remains under-examined. This study investigates sentiment--rating incongruence, the mismatch between star ratings and textual sentiment, using 16,156 tourism attraction reviews from Sri Lanka. A transformer-based sentiment pipeline identifies incongruence in 18.6\% of reviews, structured across six directional patterns, with Conservative Rater and Obligatory 5-Star behaviours accounting for 66.7\% of all mismatches. Incongruence varies significantly across venue types ($\chi^2 = 125.85$, $p < 0.001$), with museums exhibiting the highest rates. A multi-stage analytical framework, combining statistical tests, logit modeling, Random Forest, and SHAP, reveals venue type, reviewer expertise, and review length as key predictors. Predictive performance remains modest (AUC $\approx 0.58$--$0.61$), indicating that incongruence is structured yet only partially explainable using observable features. These findings challenge the assumption, ratings reliably represent textual sentiment and highlight the presence of systematic label distortion in review data, with implications for sentiment modeling and tourism platform design.
+Star ratings are widely used as ground-truth sentiment labels in opinion mining, yet their alignment with review text remains under-examined. Sentiment--rating incongruence refers to a mismatch between the star rating given by a reviewer and the sentiment expressed in the review text. This study investigates this phenomenon using tourism attraction reviews from Sri Lanka. A transformer-based sentiment pipeline identifies incongruence in 18.6\% of reviews, structured across six directional patterns, with Conservative Rater and Obligatory 5-Star behaviours accounting for 66.7\% of all mismatches. Incongruence varies significantly across venue types, with museums exhibiting the highest rates. A multi-stage analytical framework, combining statistical tests, logit modeling, Random Forest, and SHAP, reveals venue type, reviewer expertise, and review length as key predictors. Predictive performance remains modest (AUC $\approx 0.58$--$0.61$), indicating that incongruence is structured yet only partially explainable using observable features. These findings challenge the assumption, ratings reliably represent textual sentiment and highlight the presence of systematic label distortion in review data, with implications for sentiment modeling and tourism platform design.
 \end{abstract}
 
 \begin{IEEEkeywords}
@@ -45,7 +45,7 @@ Such divergence is not necessarily erroneous but reflects consistent reviewer be
 
 Despite its importance, incongruence remains insufficiently studied. Prior work continues to rely on ratings as proxy labels, largely focusing on hotels and restaurants in well-studied regions \cite{ref2}, \cite{ref12}. Topic modelling and aspect-based sentiment analysis have extended our understanding of how specific service dimensions relate to overall ratings \cite{ref13}, \cite{ref14}, yet the broader question of systematic incongruence across review types and venue categories has received limited attention. Studies in Sri Lanka report rating--text incompatibility in hotel reviews \cite{ref3}, \cite{ref4}, while broader research highlights contextual variation and systematic inconsistency \cite{ref5,ref6,ref7}.
 
-There is limited understanding of its prevalence, structure, and drivers, particularly for tourism attractions. Existing systematic reviews of sentiment analysis in hospitality \cite{ref12} confirm that attraction reviews in emerging destinations are substantially understudied relative to hotels and restaurants. Furthermore, the potential for zero-shot and transfer learning approaches to operate without labelled data \cite{ref15} opens new avenues for characterising incongruence at scale without manual annotation overhead. This study addresses these gaps using 16,156 Sri Lankan attraction reviews (2010--2023) \cite{ref8}, providing a systematic analysis of how sentiment is encoded differently across textual and numerical channels.
+There is limited understanding of its prevalence, structure, and drivers, particularly for tourism attractions. Existing systematic reviews of sentiment analysis in hospitality \cite{ref12} confirm that attraction reviews in emerging destinations are substantially understudied relative to hotels and restaurants. Furthermore, the potential for zero-shot and transfer learning approaches to operate without labelled data \cite{ref15} opens new avenues for characterising incongruence at scale without manual annotation overhead. This study addresses these gaps using Sri Lankan attraction reviews (2010--2023) \cite{ref8}, providing a systematic analysis of how sentiment is encoded differently across textual and numerical channels.
 
 \section{Related Work}
 The foundational survey by Pang and Lee \cite{ref1} established sentiment analysis as a formal discipline, embedding the assumption that star ratings reflect textual sentiment. Despite acknowledged imperfections, this convention persists in tourism research as a practical labeling strategy and baseline supervisory signal. Alaei, Becken, and Stantic \cite{ref2} observe that ratings are widely used as weak labels without explicit validation, with research heavily concentrated on hotels and restaurants. This imbalance is further confirmed by Ameur, Hamdi, and Ben Yahia \cite{ref12}, who highlight limited venue diversity and geographic coverage in existing studies, particularly for emerging tourism destinations.
@@ -63,9 +63,13 @@ Overall, sentiment--rating incongruence remains insufficiently characterised in 
 \section{Methodology}
 
 This study follows a four-phase process to examine how star ratings and review text
+<<<<<<< HEAD
 differ in sentiment. The phases are: (1) data screening and preprocessing,
 (2) choosing a sentiment model, (3) building analysis variables, and
 (4) running statistical and predictive tests. Table~\ref{tab:methodology_overview}
+=======
+differ in sentiment. Table~\ref{tab:methodology_overview}
+>>>>>>> d7b4759 (Revise abstract and methodology sections for clarity; enhance description of sentiment-rating incongruence and analysis process)
 gives a summary of the full process.
 
 \begin{table}[htbp]
@@ -77,10 +81,17 @@ gives a summary of the full process.
 \toprule
 \textbf{Ph.} & \textbf{Stage} & \textbf{Method / Tool} & \textbf{Output} \\
 \midrule
+<<<<<<< HEAD
 1 & Data Screening      & Rule-based normalization; temporal and geographic feature extraction & Clean 16,156-review analytical dataset \\
 2 & Model Comparison    & Two pretrained and two fine-tuned RoBERTa variants benchmarked on 1,000 labelled reviews & Sentiment label for each review \\
 3 & Variable Building   & Rating grouping, mismatch typology, reviewer-tier and log transforms & Incongruence target and predictors \\
 4 & Analysis            & Bivariate tests, logistic models, Random Forest, SHAP & Drivers, effect sizes, predictive performance \\
+=======
+1 & Dataset and Preprocessing       & Rule-based normalization, feature engineering          & Clean review dataset \\
+2 & Model Selection     & RoBERTa variants tested on 1,000 labelled reviews      & Sentiment labels for all reviews \\
+3 & Variable Building   & Derived from model output and reviewer data            & Incongruence flag, pattern type, reviewer tier \\
+4 & Analysis            & Chi-square, Mann--Whitney U, Logit, Random Forest, SHAP & Key drivers and effect sizes \\
+>>>>>>> d7b4759 (Revise abstract and methodology sections for clarity; enhance description of sentiment-rating incongruence and analysis process)
 \bottomrule
 \end{tabular}%
 }
@@ -138,6 +149,7 @@ Text                & Full review content                                       
 
 \subsection{Sentiment Model Selection}
 
+<<<<<<< HEAD
 To assign a sentiment label (Positive, Neutral, or Negative) to each review, four
 transformer-based models were compared using a manually labelled subset of 1,000
 reviews. This corpus was partitioned into 700 training reviews and a fixed
@@ -160,6 +172,15 @@ reviews. Although fine-tuned RoBERTa-base achieved a marginally higher Macro F1
 ($0.6984$ vs.\ $0.6918$), it had lower accuracy ($0.7767$ vs.\ $0.83$). Given this
 small trade-off and the reproducibility advantage of a fixed pretrained checkpoint,
 the Cardiff model was selected for full-corpus inference.
+=======
+To assign sentiment labels to each review, several transformer-based models were
+compared using a manually labelled subset of 1,000 reviews. The review title and
+text were combined as input, and Macro F1 was used as the main evaluation metric
+due to class imbalance. As shown in Table~\ref{tab:sentiment_performance}, the
+pretrained \textit{cardiffnlp/twitter-roberta-base-sentiment} model showed the best
+overall balance and was selected to label the full dataset. Its use also improves
+reproducibility because it does not require task-specific fine-tuning.
+>>>>>>> d7b4759 (Revise abstract and methodology sections for clarity; enhance description of sentiment-rating incongruence and analysis process)
 
 \begin{table}[htbp]
 \caption{Sentiment Model Performance (Test Set, $n = 300$)}
@@ -266,7 +287,7 @@ SHAP                     & Explains model predictions      & Mean $|\phi|$ & Tre
 
 \section{Results}
 \subsection{Prevalence and Six-Pattern Typology}
-Of the 16,156 tourism attraction reviews analyzed, 3,005 are identified as incongruent, yielding an overall prevalence of 18.6\%, or approximately one in five reviews.
+Of the tourism attraction reviews analyzed, 3,005 are identified as incongruent, yielding an overall prevalence of 18.6\%, or approximately one in five reviews.
 
 \begin{table}[htbp]
 \caption{Six Directional Incongruence Patterns ($n = 3{,}005$ incongruent reviews)}

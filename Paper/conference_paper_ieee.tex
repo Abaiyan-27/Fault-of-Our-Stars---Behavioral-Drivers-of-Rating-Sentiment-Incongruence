@@ -131,11 +131,9 @@ reviews, split into 700 training cases and 300 held-out test cases. Review title
 and text were concatenated as model input. Performance was compared using Macro
 F1, accuracy, and weighted F1. As shown in
 Table~\ref{tab:sentiment_performance}, the pretrained
-\textit{cardiffnlp/twitter-roberta-base-sentiment} model was selected because it
-gave the best overall balance across metrics. Fine-tuned RoBERTa-base achieved a
-slightly higher Macro F1, but Cardiff produced higher accuracy and weighted F1.
-Full-dataset labelling used the same pinned model revision with batched
-inference and a maximum input length of 256 tokens.
+\textit{cardiffnlp/twitter-roberta-base-sentiment} model was selected for
+full-dataset labelling. Full-dataset labelling used the same pinned model
+revision with batched inference and a maximum input length of 256 tokens.
 
 
 \begin{table}[htbp]

@@ -271,9 +271,15 @@ analysis across reviewer and contextual factors.
 \end{table}
 
 \subsection{Variation Across Venue Types}
-To examine contextual variation, incongruence rates were compared across 11 attraction categories. A chi-square test confirms a statistically significant association between venue type and incongruence ($\chi^2(10) = 125.85$, $p < 0.001$), with a small but meaningful effect size (Cramer's V = 0.088).
-
-A clear gradient is observed (Table~\ref{tab:venue_type_rates}), with National Parks exhibiting the lowest incongruence rate (12.8\%) and Museums the highest (26.3\%). This corresponds to an odds ratio of 2.43, indicating that museum reviews are more than twice as likely to be incongruent relative to the baseline. The 13.5 percentage-point spread across categories is both substantial and systematically structured, suggesting that mismatch varies meaningfully with contextual characteristics of the experience.
+Incongruence rates were compared across 11 attraction categories to assess
+contextual variation. The Chi-square test showed a statistically significant
+association between venue type and incongruence, with a small but meaningful
+effect size ($\chi^2(10) = 125.85$, $p < 0.001$; Cramer's V = 0.088). As shown
+in Table VII, National Parks had the lowest incongruence rate (12.8\%), whereas
+Museums had the highest (26.3\%). Relative to National Parks, museum reviews
+were 2.43 times more likely to be incongruent. Overall, the variation across
+venue types indicates that rating--text mismatch is not evenly distributed, but
+differs by review context.
 
 \begin{table}[htbp]
 \caption{Incongruence Rate by Venue Type, Ranked (Reference: National Parks)}
@@ -300,10 +306,17 @@ National Parks & 12.8\% & 1.00 (ref) \\
 }
 \end{table}
 
-These findings indicate that incongruence is not uniformly distributed, motivating a more formal examination of potential predictors.
-
 \subsection{Predictors of Incongruence}
-Initial bivariate screening with FDR correction was conducted to identify variables associated with incongruence at the bivariate level. As shown in Table~\ref{tab:bivariate_screening}, four of five predictors remain significant after Benjamini--Hochberg FDR correction. Reviewer tier, province, travel year, and review length all show significant associations, while review delay is non-significant ($q = 0.7503$), providing no evidence that the timing between visit and review influences mismatch.
+Bivariate screening with Benjamini--Hochberg correction was used to identify
+predictors associated with incongruence. As shown in Table VIII, reviewer tier,
+province, travel year, and review length remained significant after correction,
+while review delay was not significant ($q = 0.7503$). Expert reviewers were
+1.97 times more likely than novices to produce incongruent reviews. In
+addition, incongruent reviews were longer at the median than congruent reviews
+(296 vs. 279 characters). These findings indicate that both reviewer
+characteristics and review content are associated with sentiment--rating
+mismatch, although multivariable modelling is needed to test their independent
+effects.
 
 \begin{table}[htbp]
 \caption{Bivariate Predictor Screening with Benjamini--Hochberg FDR Correction}
@@ -323,10 +336,6 @@ Review Delay & Mann--Whitney & 0.7503 & 0.7503 & No \\
 \end{tabular}%
 }
 \end{table}
-
-Across reviewer tiers, expert reviewers are 1.97 times more likely than novices to produce incongruent reviews, and incongruent reviews are longer at the median (296 vs. 279 characters), suggesting that verbosity increases the likelihood of divergence between text and rating. While these results establish meaningful associations, they do not account for confounding effects between variables. Therefore, multivariate modeling is required to identify independent predictors.
-
-VIF analysis shows no multicollinearity (max = 3.663, mean = 2.186).
 
 \subsection{Model-Based Analysis and Interpretation}
 \subsubsection{Model 1A -- Logistic Regression (Baseline Discrimination)}

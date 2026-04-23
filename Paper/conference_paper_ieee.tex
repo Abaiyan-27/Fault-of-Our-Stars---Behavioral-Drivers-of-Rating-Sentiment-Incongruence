@@ -79,9 +79,9 @@ summarizes the workflow.
 \textbf{Ph.} & \textbf{Stage} & \textbf{Method / Tool} & \textbf{Output} \\
 \midrule
 1 & Dataset and Preprocessing       & Rule-based normalization, feature engineering          & Clean review dataset \\
-2 & Model Selection     & RoBERTa variants tested on 1,000 labelled reviews & Sentiment labels for all reviews \\
-3 & Variable Building   & Derived from model output and reviewer data            & Incongruence flag, pattern type, reviewer tier \\
-4 & Analysis            & Chi-square, Mann--Whitney U, Logit, Random Forest, SHAP & Key drivers and effect sizes \\
+2 & Sentiment Model Selection    & RoBERTa variants tested on 1,000 labelled reviews & Sentiment labels for all reviews \\
+3 & Variable Construction   & Derived from model output and reviewer data            & Incongruence flag, pattern type, reviewer tier \\
+4 & Statistical Testing and Predictive Modelling            & Chi-square, Mann--Whitney U, Logit, Random Forest, SHAP & Key drivers and effect sizes \\
 \bottomrule
 \end{tabular}%
 }
@@ -94,24 +94,21 @@ an analytical dataset suitable for studying mismatch across space, time, and
 reviewer behaviour. The study used the ``Tourism and Travel Reviews: Sri Lankan
 Destinations'' dataset from Mendeley Data~\cite{ref8}, which contains 16,156
 reviews from 2010 to 2023 across 11 attraction types in Sri Lanka. Missing
-values and duplicates were screened to preserve a consistent observation set.
-Date fields were transformed into travel year and review delay, with negative
-delays clipped at zero, so that temporal effects could be modeled in a coherent
-way. Rule-based parsing and manual mappings converted raw location strings into
-province and district, allowing the analysis to compare incongruence across
-higher-level spatial contexts. \textit{Review\_Length} was defined as the
-character count of the review text.
-\textit{Rating\_Class} grouped star ratings as follows:
+values and duplicates were checked during preprocessing. Date fields were used
+to create travel year and review delay, with negative delay values set to zero.
+Raw location text was processed using rule-based parsing and manual mapping to
+identify province and district. \textit{Review\_Length} was calculated as the
+character count of the review text. Star ratings were grouped into three
+classes:
 \begin{itemize}
     \item Negative (1--2$\star$)
     \item Neutral (3$\star$)
     \item Positive (4--5$\star$)
 \end{itemize}
-The rating values themselves were taken directly from the source dataset rather
-than manually re-annotated. This grouping follows common practice~\cite{ref1,ref2}
-and makes the rating channel directly comparable with three-class sentiment
-output. Table~\ref{tab:dataset_attributes} lists the source columns used to
-construct the analytical dataset.
+This grouping follows common practice in sentiment
+analysis~\cite{ref1,ref2} and makes the rating scale directly comparable with
+the three-class sentiment output. Table~\ref{tab:dataset_attributes} presents
+the source columns used to build the analytical dataset.
 
 \begin{table}[htbp]
 \caption{Source Columns Used in Analysis}
@@ -170,7 +167,7 @@ Fine-tuned RoBERTa-base     & 0.777 & 0.698 & 0.780 & Higher Mac.\ F1 only \\
 }
 \end{table}
 
-\subsection{Analytical Variable Construction}
+\subsection{Variable Construction}
 
 A central methodological contribution of the study is the explicit
 operationalization of incongruence at multiple levels. After sentiment

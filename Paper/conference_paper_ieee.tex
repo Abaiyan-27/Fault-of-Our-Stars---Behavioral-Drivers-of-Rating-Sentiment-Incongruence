@@ -385,7 +385,18 @@ experiences are expressed through neutral ratings.
 
 
 \subsection{Location Type as a Structural Moderator of Label Reliability}
-Location type is a key determinant of incongruence. Museum reviews show higher odds of mismatch (Adjusted OR = 2.386) relative to national parks, with similar effects for beaches and bodies of water; zoological gardens and waterfalls are also significant. This reflects evaluative complexity, as multidimensional experiences (e.g., museums) are harder to capture with a single rating, while religious sites may show higher mismatch due to social pressures. These results indicate that label reliability varies with context. Treating all reviews uniformly may therefore introduce systematic bias, highlighting the need for context-aware sentiment models.
+Location type emerges as an important determinant of sentiment--rating
+incongruence. Compared with National Parks, museum reviews show substantially
+higher odds of mismatch (Adjusted OR = 2.386), with similar patterns observed
+for beaches, bodies of water, zoological gardens, and waterfalls. One possible
+explanation is that some attraction types involve more complex and
+multidimensional experiences, making them harder to summarise with a single
+numerical rating. In other cases, such as religious sites, social or cultural
+expectations may shape how ratings are assigned despite mixed textual
+sentiment. These results suggest that the reliability of star ratings varies
+across review contexts. As a result, treating all reviews as equally reliable
+labels may introduce systematic bias, highlighting the need for more
+context-aware sentiment modelling.
 
 \subsection{Complementary Roles of Linear and Nonlinear Models}
 The multi-model framework demonstrates that linear and nonlinear approaches provide complementary layers of insight rather than competing explanations. The logistic regression baseline achieves a test AUC of 0.584, establishing a stable reference for linear discriminative capacity, while the explanatory logit model identifies 19 statistically significant predictors, providing interpretable effect sizes and clear directional relationships. The Random Forest model achieves a higher test AUC of 0.6095, confirming the presence of nonlinear relationships and interaction effects. However, the modest gain indicates nonlinearities are secondary drivers of incongruence. 

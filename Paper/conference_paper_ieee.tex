@@ -31,7 +31,24 @@
 \maketitle
 
 \begin{abstract}
-Star ratings are widely used as ground-truth sentiment labels in opinion mining, yet their alignment with review text remains under-examined. Sentiment--rating incongruence refers to a mismatch between the star rating given by a reviewer and the sentiment expressed in the review text. This study investigates this phenomenon using tourism attraction reviews from Sri Lanka. A transformer-based sentiment pipeline identifies incongruence in 18.6\% of reviews, structured across six directional patterns, with Conservative Rater and Obligatory 5-Star behaviours accounting for 66.7\% of all mismatches. Incongruence varies significantly across venue types, with museums exhibiting the highest rates. A multi-stage analytical framework, combining statistical tests, logit modeling, Random Forest, and SHAP, reveals venue type, reviewer expertise, and review length as key predictors. Predictive performance remains modest (AUC $\approx 0.58$--$0.61$), indicating that incongruence is structured yet only partially explainable using observable features. These findings challenge the assumption, ratings reliably represent textual sentiment and highlight the presence of systematic label distortion in review data, with implications for sentiment modeling and tourism platform design.
+Star ratings are widely used as ground-truth sentiment labels in opinion mining,
+yet their alignment with review text remains under-examined.
+Sentiment--rating incongruence refers to a mismatch between the star rating
+assigned by a reviewer and the sentiment expressed in the review text. This
+study investigates the phenomenon using tourism attraction reviews from Sri
+Lanka. A transformer-based sentiment pipeline identifies incongruence in 18.6\%
+of reviews and organises it into six directional patterns, with Conservative
+Rater and Obligatory 5-Star behaviours accounting for 66.7\% of all
+mismatches. Incongruence varies significantly across venue types, with museums
+showing the highest rates. A multi-stage analytical framework combining
+statistical tests, logit modelling, Random Forest, and SHAP-based supportive
+interpretation identifies venue type, reviewer expertise, and review length as
+key predictors. Predictive performance remains modest (AUC $\approx$
+0.58--0.61), indicating that incongruence is structured yet only partly
+explainable using observable features. These findings challenge the assumption
+that ratings reliably represent textual sentiment and highlight systematic label
+distortion in review data, with implications for sentiment modelling and
+tourism platform design.
 \end{abstract}
 
 \begin{IEEEkeywords}
@@ -39,26 +56,107 @@ Sentiment Analysis, Sentiment-Rating Incongruence, Tourism Reviews, Sri Lanka, L
 \end{IEEEkeywords}
 
 \section{Introduction}
-If someone is planning to go on a tour to a place, one of the main sources that they look first are reviews by the previous travellers. Usually almost all tourism platforms present both star ratings and the written text sentiments for others to get an understanding about the destinations. In the scope of sentiment analysis, these star ratings are taken as the reference values/labels, which provide an easy mapping to sentiment polarity \cite{ref1,ref2}. But, this assumption hasn’t really been tested much even though there are instances where the star ratings and the text sentiment does not match at all, even introducing noise to the downstream models. The rapid growth of user-generated content on sites like TripAdvisor has greatly increased the amount of review data available \cite{ref9}. However, the reliability of numerical ratings with respect to the text sentiment have not been analyzed at an equivalent pace.
+Tourism reviews are an important source of information for travel
+decision-making, and most review platforms present both numerical star ratings
+and written review text. In sentiment analysis, these ratings are often treated as
+reference labels because they provide a convenient mapping to sentiment
+polarity [1], [2]. However, this assumption remains insufficiently examined. In
+many cases, numerical ratings and textual sentiment do not align, which may
+introduce systematic noise into downstream models. The rapid growth of
+user-generated content on platforms such as TripAdvisor has greatly increased
+the volume of available review data [9], but the reliability of ratings as
+proxies for textual sentiment has not been examined at a comparable pace.
 
-These divergences in the ratings and texts are actually not errors, but it reflects on how a consistent reviewers’ behaviour is driven by their expectations, experience, and the context. For example, one visitor might write "genuinely fascinating" about a museum but still gives three stars because he expected more, while on the other hand, another might rate a temple five stars out of cultural reverence and might write "it was okay, quite crowded". So, this means the numbers and the words are telling two different stories. In this study, we define this as “sentiment-rating incongruence” and will treat it as a structured behavioral pattern rather than just a problem of how responses get labeled. Many large scale review datasets from previous dataset analysis have proved that a considerable amount of reviews display some form of inconsistency between the sentiment polarity and the given star rating score \cite{ref5,ref6}, demonstrating the experimental instability of the assumption of rating-text alignment. Deep learning methods, particularly transformer-based models, have exhibited greater potential to identify these tiny distinctions when compared to traditional lexicon-based approaches \cite{ref10,ref11}.
+These divergences should not be treated simply as errors. Instead, they may
+reflect consistent reviewer behaviour shaped by expectations, experience, and
+context. For example, a visitor may describe a museum positively but assign
+only three stars because the experience did not meet prior expectations.
+Conversely, a reviewer may assign five stars to a religious site while
+expressing mixed sentiment in the text because of cultural or social
+considerations. In this study, this phenomenon is defined as sentiment--rating
+incongruence and is treated as a structured behavioural pattern rather than a
+simple labelling problem. Evidence from previous studies suggests that a
+substantial proportion of reviews show some form of inconsistency between
+sentiment polarity and rating scores [5], [6], indicating that the assumption
+of rating--text alignment is empirically fragile. Transformer-based methods are
+particularly well suited to identifying such subtle distinctions when compared
+with traditional lexicon-based approaches [10], [11].
 
-Despite its importance, incongruence remains insufficiently studied. Previous research predominantly uses ratings as proxy labels, concentrating mainly on hotels and restaurants in closely studied areas \cite{ref2,ref12}. Furthermore, topic modelling and aspect-based sentiment analysis have improved our understanding of the relationship between specific service aspects and overall ratings \cite{ref13,ref14}. However, the fundamental issue of systematic incongruence across review types and venue categories has not been properly investigated. Research conducted in Sri Lanka identifies incompatibility between ratings and review texts in hotel reviews \cite{ref3,ref4}. Additionally, broader studies highlight contextual variation and systematic inconsistency \cite{ref5,ref6,ref7}.
+Despite its importance, sentiment--rating incongruence remains under-studied.
+Previous research has largely relied on ratings as proxy labels and has focused
+mainly on hotels and restaurants in well-studied settings [2], [15]. Topic
+modelling and aspect-based sentiment analysis have improved understanding of how
+specific service aspects relate to overall ratings [12], [13], yet the broader
+issue of systematic incongruence across review types and attraction categories
+has received less attention. In the Sri Lankan context, prior studies have
+identified rating--text incompatibility in hotel reviews [3], [4], while
+broader international research points to contextual variation and persistent
+inconsistency [5]--[7].
 
-Despite growing interest in online reviews, the understanding is relatively little about how common sentiment-rating incongruence is, what forms it takes, and what causes it, specially in tourism context. Reviews of hospitality research confirm that attractions, particularly in emerging destinations like Sri Lanka, have received lower priority than hotels and restaurants. At the same time, advances in zero-shot and transfer learning mean it is now possible to study this phenomenon at a larger scale without needing manually labelled data. This study draws on a dataset on popular Sri Lankan a	raction reviews spanning 2010 to 2023 to examine how sentiment is expressed differently across text and star ratings.
+There is still limited understanding of how common sentiment--rating
+incongruence is, what forms it takes, and which factors drive it, particularly
+in tourism attraction reviews from emerging destinations. Reviews of the
+hospitality literature suggest that attractions have received less attention
+than hotels and restaurants, especially in underrepresented settings such as
+Sri Lanka [15]. At the same time, advances in transformer-based and
+transfer-learning methods make it possible to study this phenomenon at scale
+without relying on ratings as the sole source of sentiment labels. Using a
+large dataset of Sri Lankan tourism attraction reviews collected between 2010
+and 2023, this study investigates how textual sentiment and numerical ratings
+diverge and examines the structural and behavioural factors associated with that
+divergence.
 
 \section{Related Work}
-The foundational survey by Pang and Lee \cite{ref1} has established the sentiment analysis as a traditional area, with the assumption that star ratings actually reflect on the sentiment which was written in text. Even with the recognized imperfections in this assumption, that convention still remains in the tourism research area as a practical labelling strategy and as a reference benchmarking level. Alaei et al. \cite{ref2} have observed that the star ratings are widely considered as weak labels without a clear validation, with their research being heavily concentrated on hotels and restaurants data. This imbalance is further confirmed by Ameur et al. \cite{ref12}, where they highlighted the limited venue diversity and geographic coverage in existing studies, especially for emerging tourist destinations.
+The foundational survey by Pang and Lee [1] established sentiment analysis as a
+major research area and reinforced the common assumption that star ratings
+broadly reflect the sentiment expressed in review text. Despite recognised
+limitations, this convention remains widely used in tourism research as a
+practical weak-labelling strategy [2]. Alaei et al. [2] note that ratings are
+often treated as weak labels without explicit validation, and that the
+literature has been heavily concentrated on hotels and restaurants. This
+imbalance is further highlighted by Ameur et al. [15], who report limited venue
+diversity and restricted geographic coverage in existing studies, especially
+for emerging tourism destinations.
 
-Methodological advances have significantly increased the capabilities of sentiment analysis. Wen et al. \cite{ref10} demonstrated the effectiveness of the transformer-based models like Bidirectional Encoder Representations from Transformer (BERT) \cite{ref16} and Enhanced Representation through Knowledge Integration (ERNIE) \cite{ref17}, while Puh and Bagic Babac \cite{ref11} has shown that predicting both sentiment and the ratings has given more deeper understanding. A multilingual approach along with an aspect based approach will make interpretation much easier \cite{ref13,ref14}. Moreover, some recent zeroshot approaches help to analyze uncommon data without providing any additional information \cite{ref15}.
+Methodological advances have substantially improved sentiment analysis in
+tourism. Wen et al. [10] demonstrate the effectiveness of transformer-based
+models such as BERT [16] and ERNIE [17], while Puh and Bagic Babac [11] show
+that jointly analysing sentiment and ratings can provide more detailed insight.
+Multilingual approaches and aspect-based methods further improve
+interpretability by linking sentiment to specific components of the tourism
+experience [12], [13]. More recently, zero-shot approaches have expanded the
+feasibility of analysing under-studied datasets with limited labelled data
+[14].
 
-In the context of Sri Lanka, Abeysinghe and Bandara \cite{ref3,ref4} documented rating-text incompatibility in hotel reviews, but they rely on lexicon-based methods and treat inconsistency primarily as a labeling issue. On the other hand, this study extends the scope to tourism attraction reviews, while making use of transformer-based models, and formulates incongruence as a behavioural aspect requiring context rather than correcting them, and with that, shifting the analytical perspective.
+In the Sri Lankan context, Abeysinghe and Bandara [3], [4] document rating--text
+incompatibility in hotel reviews, but their work relies mainly on
+lexicon-based methods and treats inconsistency primarily as a labelling
+problem. In contrast, the present study focuses on tourism attraction reviews,
+uses transformer-based sentiment inference, and interprets incongruence as a
+behavioural phenomenon requiring explanation rather than correction.
 
-Studies relating to the relationship between ratings and the text are inconclusive. According to Bigne et al. \cite{ref5}, there is a general alignment with some variations based on context, but in contrast, George and Ramos \cite{ref9} have discovered that ratings tend to be greater than sentiment in most destination related reviews. Kwon et al. \cite{ref6} further shows that the inconsistency varies with the context and impacts the helpfulness of the reviews.
+Empirical findings on the relationship between ratings and review text remain
+mixed. Bigne et al. [5] report general alignment between the two, but also
+identify variation across contexts. George and Ramos [9] show that ratings may
+exceed text-based sentiment in destination-related reviews, while Kwon et al.
+[6] demonstrate that rating--text inconsistency varies by context and
+influences perceived review usefulness. These findings suggest that ratings and
+text do not always capture the same dimension of experience.
 
-Reviewer characteristics also play a critical role. Chua and Banerjee \cite{ref7} show that reviewer expertise affects the relationship between ratings and textual content, whereas the previous work connects sentiment polarity and review depth to perceived usefulness \cite{ref7,ref12}, suggesting that ratings and text capture different aspects of the user experience.
+Reviewer characteristics also appear to matter. Chua and Banerjee [7] show that
+reviewer expertise influences the relationship between ratings and textual
+content, while related work links sentiment polarity and review depth to
+perceived usefulness [7], [15]. Taken together, these studies indicate that
+ratings and text may encode different aspects of user experience and that
+inconsistency may be partly shaped by reviewer-level behaviour.
 
-In general, however, the problem of sentiment-rating inconsistency is incompletely understood, especially in emerging tourist destinations. While recent advancements in transformer-based and aspect-based methods facilitate large-scale, precise analysis \cite{ref10,ref11,ref13,ref14} and minimize labeling needs \cite{ref15}, to the best of our knowledge, no existing research attempts to investigate the nature of directionally inconsistent patterns and their fundamental factors using a multi-venue, longitudinal dataset. So, this study tries to address this gap using a large-scale Sri Lankan tourism review dataset spanning diverse attraction types and extended time frame \cite{ref8}, providing new experimental results from an underrepresented context.
+Overall, sentiment--rating incongruence remains insufficiently understood,
+particularly in tourism attraction contexts and emerging destinations. Although
+recent methods enable large-scale and fine-grained analysis [10]--[14], there
+is still limited evidence on the structure of directional mismatch patterns and
+their drivers in multi-venue, longitudinal datasets. This study addresses that
+gap using a large-scale Sri Lankan tourism review dataset spanning diverse
+attraction types and extended temporal coverage [8].
 
 \section{Methodology}
 The methodological contribution of this study is a four-stage framework for
@@ -213,10 +311,12 @@ venue type, province, reviewer tier, review length, review delay, and travel
 year terms, with low multicollinearity (max VIF~$= 3.663$).
 
 Chi-square and Mann--Whitney U tests were used for bivariate analysis, with
-Benjamini--Hochberg correction for multiple testing. Logistic regression and
-logit models were used to examine linear effects and adjusted odds ratios,
-while Random Forest and SHAP were used to identify nonlinear effects and
-feature importance. Model performance was evaluated using AUC-ROC.
+Benjamini--Hochberg correction applied for multiple testing. Logistic
+regression and logit models were used to examine linear effects and adjusted
+odds ratios, while Random Forest was used to assess nonlinear relationships.
+SHAP was included as a supportive post hoc interpretation tool to summarise
+feature influence rather than as a primary modelling component. Model
+performance was evaluated using AUC-ROC.
 
 \begin{table}[htbp]
 \caption{Modelling and Interpretation Framework}
@@ -332,13 +432,13 @@ interactions. It achieved a test AUC of 0.6095, which was slightly higher than
 logistic regression. This indicates that nonlinear effects are present, although
 their contribution is modest.
 
-\text{4) SHAP Analysis -- Interpreting Nonlinear Behaviour:}
-SHAP analysis was used to interpret the Random Forest model. The most
-influential predictors were review length, expert tier, travel year, review
-delay, and museums. The SHAP results were broadly consistent with the logit
-model, while also showing that some effects vary across contexts. Together,
-these findings suggest that incongruence is structured but only partly
-explained by the available predictors.
+\text{4) SHAP Analysis -- Supportive Interpretation of Nonlinear Behaviour:}
+SHAP analysis was used as a supportive post hoc tool to interpret the Random
+Forest model. It highlighted review length, expert tier, travel year, review
+delay, and museums as influential predictors. The SHAP results were broadly
+consistent with the logit model and suggest that some effects vary across
+contexts. Overall, SHAP supports, rather than replaces, the main inferences
+drawn from the statistical and predictive models.
 
 \section{Discussion}
 \subsection{Structured Incongruence and Conservative Rating Behaviour }
@@ -386,12 +486,12 @@ dominant. Importantly, the overall predictive range (AUC $\approx 0.58$--$0.61$)
 should not be interpreted only as a modelling limitation. Instead, it suggests
 that incongruence is a structured but only partially observable phenomenon,
 with substantial variation likely driven by latent behavioural and contextual
-factors. SHAP analysis reinforces this interpretation by showing that
-predictors such as reviewer expertise, review length, and venue type
-contribute in nonlinear and context-dependent ways. Taken together, these
-findings show that incongruence is not random, but its full explanation
-requires richer behavioural and contextual information than is available in the
-current feature set.
+factors. SHAP provides supportive evidence by showing that predictors such as
+reviewer expertise, review length, and venue type can contribute in nonlinear
+and context-dependent ways. Taken together, these findings show that
+incongruence is not random, but its full explanation requires richer
+behavioural and contextual information than is available in the current feature
+set.
 
 \subsection{Review Delay and Reviewer Expertise Effects }
 Review delay appears to play only a limited role in explaining sentiment--rating

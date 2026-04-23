@@ -402,15 +402,6 @@ To capture nonlinear relationships and interactions, a Random Forest model was t
 \subsubsection{SHAP Analysis -- Interpreting Nonlinear Behaviour}
 SHAP analysis was applied to the Random Forest to interpret feature effects. Mean absolute SHAP values identify review length (0.0306), expert tier (0.0273), Travel\_Year\_c (0.0219), review delay (0.0203), and museums (0.0182) as the most influential predictors.The SHAP summary shows that longer reviews increase incongruence, expert reviewers contribute positively (less experienced negatively), and incongruence declines over time, consistent with the logit model. Review delay has a modest, context-dependent effect, aligning with its non-significance in bivariate analysis and weak logit impact, suggesting interaction-driven influence. SHAP complements the logit by revealing nonlinear, context-dependent effects. 
 
- 
-
-\begin{figure}[htbp]
-\centering
-\includegraphics[width=\columnwidth]{fig7b_shap_summary.png}
-\caption{SHAP summary plot for the Random Forest model.}
-\label{fig:shap_summary}
-\end{figure}
-
 \section{Discussion}
 \subsection{Structured Incongruence and Conservative Rating Behaviour }
 An incongruence rate of 18.6\% (\~1 in 5 reviews) indicates systematic mismatch rather than random noise. In Sri Lanka, religious sites may induce high ratings despite mixed sentiment, while museums require multidimensional evaluation not captured by a single score; experienced reviewers may also write positively but rate conservatively. This structured, context-dependent behaviour is further reflected in the Conservative Rater pattern, which combines positive text with moderate ratings. It accounts for 38.4\% of incongruent reviews and represents the dominant mechanism of mismatch. Its prevalence increases from 27.4\% (novice) to 40.4\% (expert), supporting a calibration effect where experienced reviewers apply stricter standards. Together, these findings show that incongruence is systematic rather than random. This implies that star ratings are unreliable ground-truth labels, and models may misinterpret positive experiences as neutral, particularly for expert-generated content, leading to systematic bias.

@@ -52,7 +52,7 @@ tourism platform design.
 \end{abstract}
 
 \begin{IEEEkeywords}
-Sentiment Analysis, Sentiment-Rating Incongruence, Tourism Reviews, Sri Lanka, Logistic Regression, SHAP
+Sentiment Analysis, Sentiment-Rating Incongruence, Tourism Reviews, Sri Lanka, Logistic Regression
 \end{IEEEkeywords}
 
 \section{Introduction}
@@ -60,11 +60,11 @@ Tourism reviews are an important source of information for travel
 decision-making, and most review platforms present both numerical star ratings
 and written review text. In sentiment analysis, these ratings are often treated as
 reference labels because they provide a convenient mapping to sentiment
-polarity [1], [2]. However, this assumption remains insufficiently examined. In
+polarity \cite{ref1,ref2}. However, this assumption remains insufficiently examined. In
 many cases, numerical ratings and textual sentiment do not align, which may
 introduce systematic noise into downstream models. The rapid growth of
 user-generated content on platforms such as TripAdvisor has greatly increased
-the volume of available review data [9], but the reliability of ratings as
+the volume of available review data \cite{ref9}, but the reliability of ratings as
 proxies for textual sentiment has not been examined at a comparable pace.
 
 These divergences should not be treated simply as errors. Instead, they may
@@ -77,28 +77,28 @@ considerations. In this study, this phenomenon is defined as sentiment--rating
 incongruence and is treated as a structured behavioural pattern rather than a
 simple labelling problem. Evidence from previous studies suggests that a
 substantial proportion of reviews show some form of inconsistency between
-sentiment polarity and rating scores [5], [6], indicating that the assumption
+sentiment polarity and rating scores \cite{ref5,ref6}, indicating that the assumption
 of rating--text alignment is empirically fragile. Transformer-based methods are
 particularly well suited to identifying such subtle distinctions when compared
-with traditional lexicon-based approaches [10], [11].
+with traditional lexicon-based approaches \cite{ref10,ref11}.
 
 Despite its importance, sentiment--rating incongruence remains under-studied.
 Previous research has largely relied on ratings as proxy labels and has focused
-mainly on hotels and restaurants in well-studied settings [2], [15]. Topic
+mainly on hotels and restaurants in well-studied settings \cite{ref2,ref12}. Topic
 modelling and aspect-based sentiment analysis have improved understanding of how
-specific service aspects relate to overall ratings [12], [13], yet the broader
+specific service aspects relate to overall ratings \cite{ref13,ref14}, yet the broader
 issue of systematic incongruence across review types and attraction categories
 has received less attention. In the Sri Lankan context, prior studies have
-identified rating--text incompatibility in hotel reviews [3], [4], while
+identified rating--text incompatibility in hotel reviews \cite{ref3,ref4}, while
 broader international research points to contextual variation and persistent
-inconsistency [5]--[7].
+inconsistency \cite{ref5,ref6,ref7}.
 
 There is still limited understanding of how common sentiment--rating
 incongruence is, what forms it takes, and which factors drive it, particularly
 in tourism attraction reviews from emerging destinations. Reviews of the
 hospitality literature suggest that attractions have received less attention
 than hotels and restaurants, especially in underrepresented settings such as
-Sri Lanka [15]. At the same time, advances in transformer-based and
+Sri Lanka \cite{ref12}. At the same time, advances in transformer-based and
 transfer-learning methods make it possible to study this phenomenon at scale
 without relying on ratings as the sole source of sentiment labels. Using a
 large dataset of Sri Lankan tourism attraction reviews collected between 2010
@@ -107,28 +107,28 @@ diverge and examines the structural and behavioural factors associated with that
 divergence.
 
 \section{Related Work}
-The foundational survey by Pang and Lee [1] established sentiment analysis as a
+The foundational survey by Pang and Lee \cite{ref1} established sentiment analysis as a
 major research area and reinforced the common assumption that star ratings
 broadly reflect the sentiment expressed in review text. Despite recognised
 limitations, this convention remains widely used in tourism research as a
-practical weak-labelling strategy [2]. Alaei et al. [2] note that ratings are
+practical weak-labelling strategy \cite{ref2}. Alaei et al. \cite{ref2} note that ratings are
 often treated as weak labels without explicit validation, and that the
 literature has been heavily concentrated on hotels and restaurants. This
-imbalance is further highlighted by Ameur et al. [15], who report limited venue
+imbalance is further highlighted by Ameur et al. \cite{ref12}, who report limited venue
 diversity and restricted geographic coverage in existing studies, especially
 for emerging tourism destinations.
 
 Methodological advances have substantially improved sentiment analysis in
-tourism. Wen et al. [10] demonstrate the effectiveness of transformer-based
-models such as BERT [16] and ERNIE [17], while Puh and Bagic Babac [11] show
+tourism. Wen et al. \cite{ref10} demonstrate the effectiveness of transformer-based
+models such as BERT \cite{ref16} and ERNIE \cite{ref17}, while Puh and Bagic Babac \cite{ref11} show
 that jointly analysing sentiment and ratings can provide more detailed insight.
 Multilingual approaches and aspect-based methods further improve
 interpretability by linking sentiment to specific components of the tourism
-experience [12], [13]. More recently, zero-shot approaches have expanded the
+experience \cite{ref13,ref14}. More recently, zero-shot approaches have expanded the
 feasibility of analysing under-studied datasets with limited labelled data
-[14].
+\cite{ref15}.
 
-In the Sri Lankan context, Abeysinghe and Bandara [3], [4] document rating--text
+In the Sri Lankan context, Abeysinghe and Bandara \cite{ref3,ref4} document rating--text
 incompatibility in hotel reviews, but their work relies mainly on
 lexicon-based methods and treats inconsistency primarily as a labelling
 problem. In contrast, the present study focuses on tourism attraction reviews,
@@ -136,27 +136,27 @@ uses transformer-based sentiment inference, and interprets incongruence as a
 behavioural phenomenon requiring explanation rather than correction.
 
 Empirical findings on the relationship between ratings and review text remain
-mixed. Bigne et al. [5] report general alignment between the two, but also
-identify variation across contexts. George and Ramos [9] show that ratings may
+mixed. Bigne et al. \cite{ref5} report general alignment between the two, but also
+identify variation across contexts. George and Ramos \cite{ref9} show that ratings may
 exceed text-based sentiment in destination-related reviews, while Kwon et al.
-[6] demonstrate that rating--text inconsistency varies by context and
+\cite{ref6} demonstrate that rating--text inconsistency varies by context and
 influences perceived review usefulness. These findings suggest that ratings and
 text do not always capture the same dimension of experience.
 
-Reviewer characteristics also appear to matter. Chua and Banerjee [7] show that
+Reviewer characteristics also appear to matter. Chua and Banerjee \cite{ref7} show that
 reviewer expertise influences the relationship between ratings and textual
 content, while related work links sentiment polarity and review depth to
-perceived usefulness [7], [15]. Taken together, these studies indicate that
+perceived usefulness \cite{ref7,ref12}. Taken together, these studies indicate that
 ratings and text may encode different aspects of user experience and that
 inconsistency may be partly shaped by reviewer-level behaviour.
 
 Overall, sentiment--rating incongruence remains insufficiently understood,
 particularly in tourism attraction contexts and emerging destinations. Although
-recent methods enable large-scale and fine-grained analysis [10]--[14], there
+recent methods enable large-scale and fine-grained analysis \cite{ref10,ref11,ref13,ref14,ref15}, there
 is still limited evidence on the structure of directional mismatch patterns and
 their drivers in multi-venue, longitudinal datasets. This study addresses that
 gap using a large-scale Sri Lankan tourism review dataset spanning diverse
-attraction types and extended temporal coverage [8].
+attraction types and extended temporal coverage \cite{ref8}.
 
 \section{Methodology}
 The methodological contribution of this study is a four-stage framework for

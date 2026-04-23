@@ -338,30 +338,33 @@ Review Delay & Mann--Whitney & 0.7503 & 0.7503 & No \\
 \end{table}
 
 \subsection{Model-Based Analysis and Interpretation}
-\subsubsection{Model 1A -- Logistic Regression (Baseline Discrimination)}
-A class-balanced logistic regression model with five-fold stratified cross-validation achieves a mean CV AUC of  $0.5890 \pm 0.0093$  and a test AUC of 0.5840, indicating modest but stable performance. This baseline captures the linear predictive signal, while the low AUC suggests that incongruence is influenced by latent behavioural factors beyond observable features. 
+\text{1) Model 1A -- Logistic Regression (Baseline Discrimination):}
+A class-balanced logistic regression model was used as a linear baseline. It
+achieved a mean cross-validated AUC of $0.5890 \pm 0.0093$ and a test AUC of
+0.5840, indicating modest but stable predictive performance. This suggests that
+incongruence is only partly explained by the observed variables.
 
+\text{2) Model 1B -- Explanatory Logit (Primary Inference Model):}
+The explanatory logit model was used to identify independent predictors of
+incongruence. Based on 95\% confidence intervals, 19 predictors were
+statistically significant. Venue type, reviewer expertise, review length, and
+travel year showed important effects, while review delay had only a weak
+negative association. Overall, the model shows that incongruence is shaped by
+structural, behavioural, and temporal factors.
 
-\subsubsection{Model 1B -- Explanatory Logit (Primary Inference Model)}
-A statsmodels logit model was fitted to identify independent predictors of incongruence, with adjusted odds ratios accounting for all other variables. Statistical significance was assessed using 95\% confidence intervals (CI), where predictors are significant if the CI excludes 1. A total of 19 predictors meet this criterion, indicating strong systematic relationships. 
+\text{3) Model 2 -- Random Forest (Nonlinear Structure Assessment):}
+A Random Forest model was applied to capture nonlinear relationships and
+interactions. It achieved a test AUC of 0.6095, which was slightly higher than
+logistic regression. This indicates that nonlinear effects are present, although
+their contribution is modest.
 
-Venue type emerges as a key determinant. Relative to National Parks, several attraction categories show significantly higher odds of incongruence, while Gardens, Farms, and Historic Sites do not show clear independent effects.
-
-Reviewer expertise also exhibits a clear gradient, with more experienced reviewers more likely to produce incongruence than Novices, consistent with a calibration-based interpretation of rating behaviour.
-
-Geographic effects are also evident. Several provinces show elevated odds, including Northern (1.787), Sabaragamuwa (1.641), North Central (1.601), Central (1.586), Uva (1.523), and Western (1.382), while Eastern Province (1.066) is not significant.
-
-Review characteristics indicate that review length (OR = 1.219) has a strong positive association with incongruence, whereas review delay (OR = 0.960) shows a weak but statistically significant negative effect, suggesting only a marginal influence.
-
-Temporal effects reveal a significant negative association for Travel\_Year\_c (OR = 0.946, CI $<$ 1), indicating that incongruence decreases over time. The quadratic term (Travel\_Year\_c$^2$: OR = 0.995) is not statistically significant, providing no evidence of nonlinear temporal effects and suggesting an approximately linear trend.
-
-Overall, the model provides the study's primary explanatory insight by quantifying the independent and directional effects of structural, behavioural, temporal, and contextual predictors on the likelihood of incongruence.
-
-\subsubsection{Model 2 -- Random Forest (Nonlinear Structure Assessment)}
-To capture nonlinear relationships and interactions, a Random Forest model was trained on the same dataset. It achieves a test AUC of 0.6095, improving by +0.0256 over logistic regression, confirming the presence of nonlinear effects. However, the modest gain indicates these effects are not dominant, positioning the Random Forest as a complementary diagnostic model rather than a replacement for the logit.
-
-\subsubsection{SHAP Analysis -- Interpreting Nonlinear Behaviour}
-SHAP analysis was applied to the Random Forest to interpret feature effects. Mean absolute SHAP values identify review length (0.0306), expert tier (0.0273), Travel\_Year\_c (0.0219), review delay (0.0203), and museums (0.0182) as the most influential predictors.The SHAP summary shows that longer reviews increase incongruence, expert reviewers contribute positively (less experienced negatively), and incongruence declines over time, consistent with the logit model. Review delay has a modest, context-dependent effect, aligning with its non-significance in bivariate analysis and weak logit impact, suggesting interaction-driven influence. SHAP complements the logit by revealing nonlinear, context-dependent effects. 
+\text{4) SHAP Analysis -- Interpreting Nonlinear Behaviour:}
+SHAP analysis was used to interpret the Random Forest model. The most
+influential predictors were review length, expert tier, travel year, review
+delay, and museums. The SHAP results were broadly consistent with the logit
+model, while also showing that some effects vary across contexts. Together,
+these findings suggest that incongruence is structured but only partly
+explained by the available predictors.
 
 \section{Discussion}
 \subsection{Structured Incongruence and Conservative Rating Behaviour }

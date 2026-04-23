@@ -242,7 +242,7 @@ SHAP (post hoc)          & Explains model predictions      & Mean $|\phi|$ & Tre
 \subsection{Prevalence and Six-Pattern Typology}
 Among the 16,156 tourism attraction reviews analysed, 3,005 were identified as
 incongruent, giving an overall prevalence of 18.6\%, or roughly one in five
-reviews. Table~\ref{tab:six_patterns} further shows that incongruence follows a
+reviews. Fig.~\ref{fig:incongruence_patterns} further shows that incongruence follows a
 six-pattern
 typology. The two most common patterns, Conservative Rater (38.4\%) and
 Obligatory 5-Star (28.3\%), together account for 66.7\% of all incongruent
@@ -253,62 +253,31 @@ often paired with non-negative ratings. These findings suggest that
 incongruence reflects consistent behavioural patterns, supporting further
 analysis across reviewer and contextual factors.
 
-\begin{table}[htbp]
-\caption{Six Directional Incongruence Patterns ($n = 3{,}005$ incongruent reviews)}
-\label{tab:six_patterns}
+\begin{figure}[htbp]
 \centering
-\resizebox{\columnwidth}{!}{%
-\begin{tabular}{cL{3.0cm}L{2.5cm}L{2.2cm}cL{4.3cm}}
-\toprule
-\# & Pattern & Rating & Sentiment & $n$ & \% of Incongruent / \% of All \\
-\midrule
-1 & Conservative Rater & Neutral (3$\star$) & POSITIVE & 1,155 & 38.4\% / 7.1\% \\
-2 & Obligatory 5-Star & Positive (4--5$\star$) & NEUTRAL & 851 & 28.3\% / 5.3\% \\
-3 & Frustrated Neutral & Neutral (3$\star$) & NEGATIVE & 509 & 16.9\% / 3.2\% \\
-4 & Polite Inflator & Positive (4--5$\star$) & NEGATIVE & 219 & 7.3\% / 1.4\% \\
-5 & Harsh Deflator & Negative (1--2$\star$) & NEUTRAL & 160 & 5.3\% / 1.0\% \\
-6 & Punitive Rater & Negative (1--2$\star$) & POSITIVE & 111 & 3.7\% / 0.7\% \\
-\bottomrule
-\end{tabular}%
-}
-\end{table}
+\includegraphics[width=\columnwidth]{fig_incongruence_patterns.png}
+\caption{Distribution of the six directional incongruence patterns.}
+\label{fig:incongruence_patterns}
+\end{figure}
 
 \subsection{Variation Across Venue Types}
 Incongruence rates were compared across 11 attraction categories to assess
 contextual variation. The Chi-square test showed a statistically significant
 association between venue type and incongruence, with a small but meaningful
 effect size ($\chi^2(10) = 125.85$, $p < 0.001$; Cramer's V = 0.088). As shown
-in Table~\ref{tab:venue_type_rates}, National Parks had the lowest
+in Fig.~\ref{fig:venue_incongruence_rate}, National Parks had the lowest
 incongruence rate (12.8\%), whereas Museums had the highest (26.3\%). Relative
 to National Parks, museum reviews
 were 2.43 times more likely to be incongruent. Overall, the variation across
 venue types indicates that rating--text mismatch is not evenly distributed, but
 differs by review context.
 
-\begin{table}[htbp]
-\caption{Incongruence Rate by Venue Type, Ranked (Reference: National Parks)}
-\label{tab:venue_type_rates}
+\begin{figure}[htbp]
 \centering
-\resizebox{\columnwidth}{!}{%
-\begin{tabular}{L{3.0cm}cc}
-\toprule
-Venue Type & Incongruence Rate & OR vs. National Parks \\
-\midrule
-Museums & 26.3\% & 2.43 \\
-Beaches & 19.0\% & 1.60 \\
-Religious Sites & 19.8\% & 1.68 \\
-Bodies of Water & 23.7\% & 2.12 \\
-Gardens & 17.4\% & 1.43 \\
-Farms & 16.6\% & 1.35 \\
-Waterfalls & 18.0\% & 1.50 \\
-Nature \& Wildlife Areas & 16.4\% & 1.34 \\
-Zoological Gardens & 21.6\% & 1.88 \\
-Historic Sites & 15.6\% & 1.26 \\
-National Parks & 12.8\% & 1.00 (ref) \\
-\bottomrule
-\end{tabular}%
-}
-\end{table}
+\includegraphics[width=\columnwidth]{fig_venue_incongruence_rate.png}
+\caption{Incongruence rate by venue type.}
+\label{fig:venue_incongruence_rate}
+\end{figure}
 
 \subsection{Predictors of Incongruence}
 Bivariate screening with Benjamini--Hochberg correction was used to identify

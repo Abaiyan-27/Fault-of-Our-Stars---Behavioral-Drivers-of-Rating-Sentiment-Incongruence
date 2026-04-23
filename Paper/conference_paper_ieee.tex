@@ -203,59 +203,18 @@ Rating\_Class        & 3-class label   & Star rating (1--5) grouped      & Defin
 
 \subsection{Statistical Testing and Predictive Modelling}
 
-The final stage turns the constructed variables into an explanatory framework
-for identifying which factors systematically shape incongruence. Variable
-treatment was as follows:
-\begin{itemize}
-    \item \textit{Location\_Name} and \textit{Located\_City} were excluded
-    because they were high-cardinality fields and overlapped with broader
-    spatial variables such as \textit{Province} and \textit{Location\_Type}.
-    \item Raw date fields were not entered directly in the model because their
-    information was captured through derived temporal variables.
-    \item \textit{Title\_Length} was excluded because it was highly correlated
-    with \textit{Review\_Length}.
-    \item Temporal effects were modelled using a centred linear term
-    (\textit{Travel\_Year\_c}) and a quadratic term
-    (\textit{Travel\_Year\_c}$^2$) to test for nonlinear time trends while
-    reducing multicollinearity between polynomial terms.
-\end{itemize}
-The modelling setup was as follows:
-\begin{itemize}
-    \item The outcome for all predictive models was \textit{Incongruent}
-    (0 = congruent, 1 = incongruent).
-    \item \textit{Sentiment}, \textit{Rating}, and \textit{Rating\_Class} were
-    excluded from the predictor matrix because they were used to construct the
-    outcome and would otherwise introduce data leakage.
-    \item The final explanatory design matrix contained 24 predictors: 10
-    venue-type dummies, 7 province dummies, 3 reviewer-tier dummies, and 4
-    continuous terms (\textit{log\_review\_length},
-    \textit{log\_review\_delay}, \textit{Travel\_Year\_c}, and
-    \textit{Travel\_Year\_c}$^2$).
-    \item Categorical variables were dummy encoded with National Parks,
-    Southern Province, and Novice reviewers as the reference groups.
-    \item Continuous terms were transformed or centred to address skewness and
-    capture temporal structure.
-\end{itemize}
-Multicollinearity was low (max VIF~$= 3.663$).
+The final stage analysed predictors of sentiment--rating incongruence using
+both statistical tests and predictive models. \textit{Incongruent} was used as
+the binary outcome variable, while variables used to define it were excluded
+from the predictors to avoid data leakage. The final predictor set included
+venue type, province, reviewer tier, review length, review delay, and travel
+year terms, with low multicollinearity (max VIF~$= 3.663$).
 
-Bivariate screening established which predictors were associated with
-incongruence before multivariable modelling. Chi-square tests were used for
-categorical predictors, the Mann--Whitney U test for continuous predictors, and
-Cram\'{e}r's V for venue-type comparisons. Benjamini--Hochberg correction was
-applied only to the five main screening tests ($q < 0.05$).
-
-The modelling strategy deliberately combined interpretability and predictive
-validation. Model~1A was a class-balanced logistic regression used as a linear
-baseline, with a stratified 80\% training and 20\% test split, 5-fold
-stratified cross-validation on the training set, and AUC-ROC on the held-out
-test set. Model~1B was an unweighted \texttt{statsmodels} logit fit on the full
-design matrix to estimate adjusted odds ratios and 95\% confidence intervals.
-Model~2 was a Random Forest tuned with \texttt{GridSearchCV} on the training set
-and evaluated on the same test set. SHAP values were computed with TreeExplainer
-on the best Random Forest to identify the most influential nonlinear effects.
-AUC-ROC was the main performance measure because the outcome was imbalanced.
-Table~\ref{tab:model_framework} summarizes these components of the analytical
-framework.
+Chi-square and Mann--Whitney U tests were used for bivariate analysis, with
+Benjamini--Hochberg correction for multiple testing. Logistic regression and
+logit models were used to examine linear effects and adjusted odds ratios,
+while Random Forest and SHAP were used to identify nonlinear effects and
+feature importance. Model performance was evaluated using AUC-ROC.
 
 \begin{table}[htbp]
 \caption{Modelling and Interpretation Framework}

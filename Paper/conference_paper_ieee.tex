@@ -399,23 +399,25 @@ labels may introduce systematic bias, highlighting the need for more
 context-aware sentiment modelling.
 
 \subsection{Complementary Roles of Linear and Nonlinear Models}
-The results show that linear and nonlinear models provide complementary insights
-into sentiment--rating incongruence. The logistic regression baseline achieved a
-test AUC of 0.584, providing a stable reference for linear predictive
-performance, while the explanatory logit model identified 19 statistically
-significant predictors with interpretable effect sizes and clear directional
-relationships. The Random Forest model produced a slightly higher test AUC of
-0.6095, indicating the presence of nonlinear relationships and interaction
-effects. However, the modest improvement suggests that such nonlinearities are
-secondary rather than dominant drivers of incongruence. More broadly, the
-overall predictive range (AUC $\approx 0.58$--$0.61$) should not be seen only as
-a limitation, but also as evidence that incongruence is inherently complex and
-only partly observable through available structured features. SHAP analysis
-supports this interpretation by showing that variables such as reviewer
-expertise, review length, and venue type have context-dependent effects.
-Together, these findings indicate that incongruence is structured, but not
-fully captured by observable predictors, and that future improvement will
-require richer behavioural and contextual signals.
+The results indicate that linear and nonlinear models provide complementary
+perspectives on sentiment--rating incongruence rather than competing
+explanations. The logistic regression baseline achieved a test AUC of 0.584,
+providing a stable reference for linear predictive performance, while the
+explanatory logit model identified 19 statistically significant predictors and
+quantified their independent effects through adjusted odds ratios. The Random
+Forest model achieved a slightly higher test AUC of 0.6095, confirming the
+presence of nonlinear relationships and interaction effects. However, the
+modest improvement suggests that these nonlinearities are present but not
+dominant. Importantly, the overall predictive range (AUC $\approx 0.58$--$0.61$)
+should not be interpreted only as a modelling limitation. Instead, it suggests
+that incongruence is a structured but only partially observable phenomenon,
+with substantial variation likely driven by latent behavioural and contextual
+factors. SHAP analysis reinforces this interpretation by showing that
+predictors such as reviewer expertise, review length, and venue type
+contribute in nonlinear and context-dependent ways. Taken together, these
+findings show that incongruence is not random, but its full explanation
+requires richer behavioural and contextual information than is available in the
+current feature set.
 
 \subsection{Review Delay and Reviewer Expertise Effects }
 Review delay appears to play only a limited role in explaining sentiment--rating

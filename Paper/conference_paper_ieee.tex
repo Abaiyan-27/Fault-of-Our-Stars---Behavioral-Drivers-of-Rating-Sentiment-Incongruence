@@ -399,12 +399,38 @@ labels may introduce systematic bias, highlighting the need for more
 context-aware sentiment modelling.
 
 \subsection{Complementary Roles of Linear and Nonlinear Models}
-The multi-model framework demonstrates that linear and nonlinear approaches provide complementary layers of insight rather than competing explanations. The logistic regression baseline achieves a test AUC of 0.584, establishing a stable reference for linear discriminative capacity, while the explanatory logit model identifies 19 statistically significant predictors, providing interpretable effect sizes and clear directional relationships. The Random Forest model achieves a higher test AUC of 0.6095, confirming the presence of nonlinear relationships and interaction effects. However, the modest gain indicates nonlinearities are secondary drivers of incongruence. 
-
-Importantly, the overall predictive performance (AUC $\approx 0.58$--$0.61$) should not be viewed as a limitation of model quality, but as evidence of the inherently complex and partially unobservable nature of the phenomenon. While statistically significant predictors exist, their moderate effect sizes suggest that the signal is distributed across multiple factors, with remaining variation driven by latent behavioural processes such as reviewer calibration and contextual norms. This establishes a key contribution: modest predictive performance itself is an informative finding, demonstrating that incongruence is structured yet difficult to predict. SHAP analysis reinforces this interpretation by revealing how features such as reviewer expertise, review length, and venue type contribute in nonlinear and context-dependent ways. Crucially, these insights do not contradict the logit model; instead, they show that nonlinear methods capture heterogeneity within effects that linear models necessarily average. This implies that improving predictive performance requires incorporating latent behavioural and contextual signals, and that star ratings are not fully reliable ground-truth labels due to systematic, context-dependent distortions. 
+The results show that linear and nonlinear models provide complementary insights
+into sentiment--rating incongruence. The logistic regression baseline achieved a
+test AUC of 0.584, providing a stable reference for linear predictive
+performance, while the explanatory logit model identified 19 statistically
+significant predictors with interpretable effect sizes and clear directional
+relationships. The Random Forest model produced a slightly higher test AUC of
+0.6095, indicating the presence of nonlinear relationships and interaction
+effects. However, the modest improvement suggests that such nonlinearities are
+secondary rather than dominant drivers of incongruence. More broadly, the
+overall predictive range (AUC $\approx 0.58$--$0.61$) should not be seen only as
+a limitation, but also as evidence that incongruence is inherently complex and
+only partly observable through available structured features. SHAP analysis
+supports this interpretation by showing that variables such as reviewer
+expertise, review length, and venue type have context-dependent effects.
+Together, these findings indicate that incongruence is structured, but not
+fully captured by observable predictors, and that future improvement will
+require richer behavioural and contextual signals.
 
 \subsection{Review Delay and Reviewer Expertise Effects }
-Review delay shows no significant effect in bivariate analysis and only a weak negative association in the logit model (OR = 0.960). Although ranked as relatively influential by SHAP, its effect is modest and context-dependent, indicating it is a secondary factor rather than a primary driver of incongruence. In contrast, mismatch patterns vary systematically with reviewer expertise: Conservative Rater behaviour increases from 27.4\% (novice) to 40.4\% (expert), while extreme patterns such as Harsh Deflator decrease from 10.8\% to 4.2\%.This suggests experienced reviewers are more calibrated, with incongruence driven more by reviewer traits than time, underscoring the need for reviewer-level modelling.
+Review delay appears to play only a limited role in explaining sentiment--rating
+incongruence. It was not significant in the bivariate analysis and showed only
+a weak negative association in the logit model (OR = 0.960). Although SHAP
+ranked it as relatively influential, its effect remained modest and
+context-dependent, suggesting that it is a secondary factor rather than a
+primary driver. In contrast, reviewer expertise shows a much clearer
+relationship with mismatch. The prevalence of the Conservative Rater pattern
+rises from 27.4\% among novice reviewers to 40.4\% among experts, while more
+extreme patterns such as Harsh Deflator decline from 10.8\% to 4.2\%. This
+pattern suggests that experienced reviewers are more calibrated in how they use
+ratings, and that incongruence is influenced more by reviewer behaviour than by
+the timing of review submission. These findings highlight the importance of
+reviewer-level characteristics in understanding rating--text mismatch.
 
  
 

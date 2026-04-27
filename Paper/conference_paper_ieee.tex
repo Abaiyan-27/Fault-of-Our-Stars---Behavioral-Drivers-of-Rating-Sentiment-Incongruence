@@ -56,7 +56,7 @@ Despite its importance, sentiment--rating incongruence remains under-studied.
 Previous research has largely relied on ratings as proxy labels and has focused
 mainly on hotels and restaurants in well-studied settings \cite{alaei,Ameur}. Topic
 modeling and aspect-based sentiment analysis have improved understanding of how
-specific service aspects relate to overall ratings \cite{Chu et al,Ali}, yet the broader
+specific service aspects relate to overall ratings \cite{Chu2022,Ali}, yet the broader
 issue of systematic incongruence across review types and attraction categories
 has received less attention. In the Sri Lankan context, prior studies have
 identified rating--text incompatibility in hotel reviews \cite{abeysinghe,walgampaya}, while
@@ -98,7 +98,7 @@ models such as BERT \cite{Devlin} and ERNIE \cite{Sun}, while Puh and Bagic Baba
 that jointly analyzing sentiment and ratings can provide more detailed insight.
 Multilingual approaches and aspect-based methods further improve
 interpretability by linking sentiment to specific components of the tourism
-experience \cite{Chu et al,Ali}. More recently, zero-shot approaches have expanded the
+experience \cite{Chu2022,Ali}. More recently, zero-shot approaches have expanded the
 feasibility of analyzing under-studied datasets with limited labeled data
 \cite{Nawawi}.
 
@@ -355,6 +355,8 @@ characteristics and review content are associated with sentiment--rating
 mismatch, although multivariable modeling is needed to test their independent
 effects.
 
+Fig.~\ref{fig:reviewer_expertise_patterns} further illustrates the reviewer expertise effect for selected mismatch patterns, showing that Conservative Rater becomes more common among expert reviewers, while Harsh Deflator becomes less common.
+
 \begin{table}[htbp]
 \caption{Bivariate Predictor Screening with Benjamini--Hochberg FDR Correction}
 \label{tab:bivariate_screening}
@@ -444,21 +446,19 @@ behavioral and contextual information than is available in the current feature
 set.
 
 \subsection{Review Delay and Reviewer Expertise Effects }
-Review delay appears to play only a limited role in explaining sentiment--rating
-incongruence. It was not significant in the bivariate analysis and showed only
-a weak negative association in the logit model (OR = 0.960). Although SHAP
-ranked it as relatively influential, its effect remained modest and
-context-dependent, suggesting that it is a secondary factor rather than a
-primary driver. In contrast, reviewer expertise shows a much clearer
-relationship with mismatch. The prevalence of the Conservative Rater pattern
-rises from 27.4\% among novice reviewers to 40.4\% among experts, while more
-extreme patterns such as Harsh Deflator decline from 10.8\% to 4.2\%. This
-pattern suggests that experienced reviewers are more calibrated in how they use
-ratings, and that incongruence is influenced more by reviewer behavior than by
-the timing of review submission. These findings highlight the importance of
-reviewer-level characteristics in understanding rating--text mismatch.
+Review delay has a limited role in explaining sentiment--rating incongruence: it was not significant in bivariate analysis and showed only a weak negative logit association (OR = 0.960). In contrast, reviewer expertise has a clearer relationship with mismatch. As shown in Fig.~\ref{fig:reviewer_expertise_patterns}, experts show more Conservative Rater and less Harsh Deflator behavior than novices, suggesting that incongruence is driven more by reviewer behavior than by review timing.
 
  
+
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=\columnwidth]{fig_reviewer_expertise_patterns.png}
+\caption{Selected incongruence patterns by reviewer expertise, showing higher Conservative Rater prevalence and lower Harsh Deflator prevalence among expert reviewers.}
+\label{fig:reviewer_expertise_patterns}
+\end{figure}
+
+\FloatBarrier
 
 
 \section{Conclusion}
@@ -495,6 +495,15 @@ Y. Wen et al., ``Sentiment analysis of hotel online reviews using the BERT model
 \bibitem{Puh}
 K. Puh and M. Bagic Babac, ``Predicting sentiment and rating of tourist reviews using machine learning,'' \textit{Journal of Hospitality and Tourism Insights}, vol. 6, no. 3, pp. 1188--1204, 2023.
 
+\bibitem{Ameur}
+A. Ameur et al., ``Sentiment analysis for hotel reviews: A systematic literature review,'' \textit{ACM Computing Surveys}, vol. 56, no. 2, Article 51, Sep. 2023.
+
+\bibitem{Chu2022}
+M. Chu et al., ``Language interpretation in travel guidance platform: Text mining and sentiment analysis of TripAdvisor reviews,'' \textit{Frontiers in Psychology}, Oct. 2022.
+
+\bibitem{Ali}
+T. Ali et al., ``Analyzing tourism reviews using an LDA topic-based sentiment analysis approach,'' \textit{MethodsX}, vol. 9, 101894, Nov. 2022.
+
 \bibitem{abeysinghe}
 P. Abeysinghe and T. Bandara, ``A novel self-learning approach to overcome incompatibility on TripAdvisor reviews,'' \textit{Data Science and Management}, vol. 5, pp. 1--10, 2022.
 
@@ -504,26 +513,17 @@ H. P. P. M. Abeysinghe and C. K. Walgampaya, ``Sentiment analysis in user review
 \bibitem{Chua}
 A. Y. K. Chua and S. Banerjee, ``Understanding review helpfulness as a function of reviewer reputation, review rating, and review depth,'' \textit{Journal of the Association for Information Science and Technology}, vol. 66, no. 2, pp. 354--362, 2015.
 
-\bibitem{Sewwandi}
-T. Sewwandi, ``Tourism and Travel Reviews: Sri Lankan Destinations,'' Mendeley Data, V1, 2023, doi: 10.17632/2nbvx5m4hs.1.
-
-\bibitem{Chu et al}
-M. Chu et al., ``Language interpretation in travel guidance platform: Text mining and sentiment analysis of TripAdvisor reviews,'' \textit{Frontiers in Psychology}, Oct. 2022.
-
-\bibitem{Ali}
-T. Ali et al., ``Analyzing tourism reviews using an LDA topic-based sentiment analysis approach,'' \textit{MethodsX}, vol. 9, 101894, Nov. 2022.
-
-\bibitem{Nawawi}
-I. Nawawi et al., ``Exploring tourist experience through online reviews using aspect-based sentiment analysis with zero-shot learning for hospitality service enhancement,'' \textit{Information}, vol. 15, no. 8, p. 499, Aug. 2024.
-
-\bibitem{Ameur}
-A. Ameur et al., ``Sentiment analysis for hotel reviews: A systematic literature review,'' \textit{ACM Computing Surveys}, vol. 56, no. 2, Article 51, Sep. 2023.
-
 \bibitem{Devlin}
 J. Devlin et al., ``BERT: Pre-training of deep bidirectional transformers for language understanding,'' in \textit{Proceedings of the 2019 Conference of the North American Chapter of the Association for Computational Linguistics: Human Language Technologies, Volume 1 (Long and Short Papers)}, Minneapolis, MN, USA, Jun. 2019, pp. 4171--4186.
 
 \bibitem{Sun}
 Y. Sun et al., ``ERNIE: Enhanced representation through knowledge integration,'' \textit{arXiv preprint arXiv:1904.09223}, 2019.
+
+\bibitem{Nawawi}
+I. Nawawi et al., ``Exploring tourist experience through online reviews using aspect-based sentiment analysis with zero-shot learning for hospitality service enhancement,'' \textit{Information}, vol. 15, no. 8, p. 499, Aug. 2024.
+
+\bibitem{Sewwandi}
+T. Sewwandi, ``Tourism and Travel Reviews: Sri Lankan Destinations,'' Mendeley Data, V1, 2023, doi: 10.17632/2nbvx5m4hs.1.
 
 \end{thebibliography}
 

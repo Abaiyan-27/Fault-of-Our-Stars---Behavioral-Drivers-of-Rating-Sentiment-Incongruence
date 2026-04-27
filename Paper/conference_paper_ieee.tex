@@ -24,7 +24,7 @@
 
 \begin{document}
 
-\title{The Fault of our Stars: Behavioral Drivers of Rating–Sentiment Incongruence}
+\title{A Fault of our Stars: Behavioral Drivers of Rating–Sentiment Incongruence}
 
 \author{}
 
@@ -50,7 +50,7 @@ user-generated content on platforms such as TripAdvisor has greatly increased
 the volume of available review data \cite{George}, but the reliability of ratings as
 proxies for textual sentiment has not been examined at a comparable pace.
 
-These variations should not be treated simply as errors. Instead, they may indicate consistent reviewer behavior influenced by expectations, experience, and context. For example, a visitor may describe a museum positively but assign only three stars because the experience did not meet his prior expectations. On the other hand, a reviewer might give five stars to a religious site while expressing mixed sentiment in the text because of cultural or social considerations. In this study, this phenomenon is defined as sentiment–rating incongruence and is treated as a structured behavioral pattern rather than a simple labeling problem. Evidences from past studies also suggests that a considerable percentage of reviews show some form of inconsistency between sentiment polarity and rating scores \cite{Bigne}, \cite{Kwon}, indicating that the assumption of rating–text alignment is lacking a strong validation. Transformer-based methods are particularly well matching to identifying such minor differences when compared with traditional lexicon-based approaches \cite{Wen}, \cite{Puh}.
+These variations should not be treated simply as errors. Instead, they may indicate consistent reviewer behavior influenced by expectations, experience, and context. For example, a visitor may describe a museum positively but assign only three stars because the experience did not meet their prior expectations. Conversely, a reviewer might give five stars to a religious site while expressing mixed sentiment in the text because of cultural or social considerations. In this study, this phenomenon is defined as sentiment–rating incongruence and is treated as a structured behavioral pattern rather than a simple labeling problem. Previous studies also suggests that a considerable percentage of reviews show some form of inconsistency between sentiment polarity and rating scores \cite{Bigne}, \cite{Kwon}, indicating that the assumption of rating–text alignment is lacking a strong validation. Transformer-based methods are particularly well matching to identifying such minor differences when compared with traditional lexicon-based approaches \cite{Wen}, \cite{Puh}.
 
 Despite its importance, sentiment--rating incongruence remains under-studied.
 Previous research has largely relied on ratings as proxy labels and has focused
@@ -59,7 +59,7 @@ modeling and aspect-based sentiment analysis have improved understanding of how
 specific service aspects relate to overall ratings \cite{Chu2022,Ali}, yet the broader
 issue of systematic incongruence across review types and attraction categories
 has received less attention. In the Sri Lankan context, prior studies have
-identified rating--text incompatibility in hotel reviews \cite{abeysinghe,walgampaya}, while
+identified rating--text incompatibility in hotel reviews \cite{walgampaya, abeysinghe}, while
 broader international research points to contextual variation and persistent
 inconsistency \cite{Bigne,Kwon,Chua}.
 
@@ -76,7 +76,7 @@ and 2023, this study investigates how textual sentiment and numerical ratings
 diverge and examines the structural and behavioral factors associated with that
 divergence.
 
-To address these gaps, this study examines sentiment–rating incongruence in a large-scale dataset of Sri Lankan tourism attraction reviews. A transformer based sentiment pipeline is used to independently derive textual sentiment, enabling the identification of mismatches between sentiment and ratings. These mismatches are organized into directional patterns, and a multi-stage analytical framework combining statistical and machine learning techniques is applied to examine their structural and behavioral drivers.
+To address these gaps, this study examines sentiment–rating incongruence in a large-scale dataset of Sri Lankan tourism attraction reviews. A transformer-based sentiment pipeline is used to independently derive textual sentiment, enabling the identification of mismatches between sentiment and ratings. These mismatches are organized into directional patterns, and a multi-stage analytical framework combining statistical and machine learning techniques is applied to examine their structural and behavioral drivers.
 
 This study makes four contributions. First, it provides a large-scale empirical analysis of sentiment–rating incongruence in tourism attraction reviews. Second, it introduces a structured typology of mismatch patterns. Third, it identifies key structural and behavioral drivers using an integrated analytical framework. Finally, it shows that rating–text inconsistency is a meaningful, context-dependent signal with implications for sentiment modeling.
 
@@ -102,12 +102,7 @@ experience \cite{Chu2022,Ali}. More recently, zero-shot approaches have expanded
 feasibility of analyzing under-studied datasets with limited labeled data
 \cite{Nawawi}.
 
-In the Sri Lankan context, Abeysinghe and Bandara \cite{abeysinghe,walgampaya} document rating--text
-incompatibility in hotel reviews, but their work relies mainly on
-lexicon-based methods and treats inconsistency primarily as a labeling
-problem. In contrast, the present study focuses on tourism attraction reviews,
-uses transformer-based sentiment inference, and interprets incongruence as a
-behavioral phenomenon requiring explanation rather than correction.
+This inconsistency shows up in regional literature as well. Abeysinghe and Walgampaya \cite{walgampaya} document rating–text incompatibility in hotel reviews in Anuradhapura, while Abeysinghe and Bandara \cite{abeysinghe} extend this finding across five Sri Lankan cities and propose a self-learning approach to resolve it. However, both depends on lexicon-based methods and define the problem primarily as one requiring correction rather than explanation. However, the present study focuses on tourism attraction reviews, uses transformer-based sentiment analysis, and interprets incongruence as a behavioral phenomenon.
 
 Empirical findings on the relationship between ratings and review text remain
 mixed. Bigne et al. \cite{Bigne} report general alignment between the two, but also
@@ -130,7 +125,7 @@ recent methods enable large-scale and fine-grained analysis \cite{Wen,Puh,Chu202
 is still limited evidence on the structure of directional mismatch patterns and
 their drivers in multi-venue, longitudinal datasets. This study addresses that
 gap using a large-scale Sri Lankan tourism review dataset spanning diverse
-attraction types and extended temporal coverage \cite{Sewwandi}.
+attraction types and extended time span \cite{Sewwandi}.
 
 Building on these limitations, this study addresses the gap by providing a large scale, context-specific analysis of sentiment–rating incongruence in tourism attraction reviews from an underrepresented setting. Unlike prior work that treats rating–text mismatch primarily as a labeling issue, this study adopts a behavioral perspective, examining the structure of directional incongruence patterns and their underlying drivers. By combining transformer-based sentiment inference with statistical and machine learning methods, this study explains how contextual and reviewer-level factors shape sentiment–rating divergence.
 
@@ -200,7 +195,7 @@ Text                & Review body; used for sentiment and review length \\
 
 \subsection{Sentiment Model Selection}
 
-To assign sentiment labels independently from star ratings, 4 transformer-based models were tested on a manually labeled set of 1,000 reviews. The dataset was split into 700 training and 300 testing instances, where the training portion was used to fine-tune selected models and the test set was used for comparative evaluation. Review titles and texts were combined as input, and model performance was assessed using Macro F1, accuracy, and weighted F1. As shown in Table~\ref{tab:sentiment_performance}, the pretrained cardiffnlp/twitter-roberta-base-sentiment model performed best overall and was selected to label the full dataset. This model achieved a strong balance between classification performance and generalization, outperforming fine-tuned variants while avoiding potential overfitting given the limited size of the labeled dataset. This approach allowed sentiment to be identified from the review text rather than assumed from the rating.
+To assign sentiment labels independently from star ratings, 4 transformer-based models were tested on a manually labeled set of 1,000 reviews. The dataset was split into 700 training and 300 testing instances, where the training portion was used to fine-tune selected models and the test set was used for comparative evaluation. Review titles and texts were combined as input, and model performance was assessed using Macro F1, accuracy, and weighted F1. As shown in Table~\ref{tab:sentiment_performance}, the pretrained cardiffnlp/twitter-roberta-base-sentiment model performed best overall and was selected to label the full dataset \cite{Devlin, Sun}. This model achieved a strong balance between classification performance and generalization, outperforming fine-tuned variants while avoiding potential overfitting given the limited size of the labeled dataset. This approach allowed sentiment to be identified from the review text rather than assumed from the rating.
 
 
 \begin{table}[htbp]
@@ -226,40 +221,14 @@ Fine-tuned RoBERTa-base     & 0.777 & 0.698 & 0.780 & Higher Mac.\ F1 only \\
 After sentiment labeling, raw title and text were removed from further
 analysis. \textit{Incongruent} was defined as a mismatch between
 \textit{Sentiment} and \textit{Rating\_Class}, while \textit{Pattern} recorded
-the six mismatch types. \textit{Reviewer\_Tier} grouped reviewers as follows:
-\begin{itemize}
-    \item Novice (0--5)
-    \item Casual (6--20)
-    \item Active (21--100)
-    \item Expert (101+)
-\end{itemize}
-Reviewer tiers were defined based on the distribution of user contributions to reflect different levels of engagement. Most reviewers contribute only a small number of reviews, while a few are highly active, resulting in a strongly skewed distribution (median = 54, max = 9010). Based on this pattern, thresholds were chosen to separate low (0–5), moderate (6–20 and 21–100), and high (101+) activity levels. This grouping provides an intuitive way to capture differences in reviewer behavior while remaining consistent with the underlying data distribution. Additional derived variables included \textit{log\_review\_length},
-\textit{log\_review\_delay}, \textit{Travel\_Year\_c}, and
-\textit{Travel\_Year\_c2}. Table~\ref{tab:derived_variables} presents the
-constructed variables.
+the six mismatch types. \textit{Reviewer\_Tier} grouped reviewers as follows: Novice (0--5), Casual (6--20), Active (21--100), Expert (101+).
 
-\begin{table}[htbp]
-\caption{Constructed Analytical Variables}
-\label{tab:derived_variables}
-\centering
-\resizebox{\columnwidth}{!}{%
-\begin{tabular}{L{2.6cm}L{1.9cm}L{2.0cm}L{2.0cm}}
-\toprule
-\textbf{Variable} & \textbf{Type} & \textbf{Source} & \textbf{Role} \\
-\midrule
-Sentiment            & 3 Class Label   & Model output                    & Defines incongruence \\
-Incongruent          & Binary (0/1)    & Sentiment vs.\ Rating\_Class    & Target variable \\
-Pattern              & 6-category      & Sentiment $\times$ Rating\_Class & Mismatch typology \\
-Reviewer\_Tier       & 4-level ordinal & Contributions (grouped)         & Predictor \\
-log\_review\_length  & Continuous      & Review length (characters), $\log(1{+}x)$ & Predictor \\
-log\_review\_delay   & Continuous      & Visit--post gap, $\log(1{+}x)$ & Predictor \\
-Travel\_Year\_c      & Continuous      & Travel year, centered            & Time predictor \\
-Travel\_Year\_c$^2$  & Continuous      & Travel\_Year\_c squared         & Nonlinear time \\
-Rating\_Class        & 3-class label   & Star rating (1--5) grouped      & Defines incongruence \\
-\bottomrule
-\end{tabular}%
-}
-\end{table}
+Reviewer tiers were defined by analyzing the distribution of contributions. The data show strong positive skew ($\text{median} = 54$, $\text{max} = 9010$): most reviewers contribute $1$--$5$ reviews, while few exceed $100$. Based on this distribution, thresholds were set at $0$--$5$, $6$--$20$, $21$--$100$, and $101+$ to capture distinct engagement levels. Each tier corresponds to measurable differences in behavior. Reviewers with $0$--$5$ reviews exhibit minimal platform familiarity, whereas the $6$--$20$ range reflects casual engagement. The $21$--$100$ tier identifies active users with sustained participation, and $101+$ represents highly engaged expert reviewers. This tiering is further supported by rating behavior: the Conservative Rater pattern increases from $27.4\%$ among novice reviewers to $40.4\%$ among experts, indicating experience-dependent rating practices. These thresholds therefore reflect both the underlying data distribution and observable shifts in reviewer behavior.
+
+
+The constructed analytical variables used in this study comprise both target-defining and explanatory features. $Sentiment$ is represented as a three-class label derived from model output, while $Rating_Class$ is a three-class label obtained by grouping star ratings (1--5); together, these variables define sentiment–rating incongruence, from which the binary variable $Incongruent$ (0/1) is derived as the target outcome. $Pattern$ is a six-category variable formed from the interaction between $Sentiment$ and $Rating_Class$, capturing distinct mismatch typologies, and $Reviewer_Tier$ is a four-level ordinal variable based on grouped contribution levels, used as a predictor. Continuous predictors include $log_review_length$, computed as the logarithm of review length in characters using $\log(1{+}x)$, and $log_review_delay$, defined as the logarithm of the time gap between visit and posting using $\log(1{+}x)$. Temporal effects are modeled using $Travel_Year_c$, a centered travel year variable, and its squared term $Travel_Year_c^2$, which captures potential nonlinear time trends. Together, these variables provide a structured representation of textual, behavioral, and temporal factors relevant to the analysis.
+
+
 
 \subsection{Statistical Testing and Predictive Modeling}
 
@@ -329,9 +298,7 @@ contextual variation. The Chi-square test showed a statistically significant
 association between venue type and incongruence, with a small but meaningful
 effect size ($\chi^2(10) = 125.85$, $p < 0.001$; Cramer's V = 0.088). As shown
 in Fig.~\ref{fig:venue_incongruence_rate}, National Parks had the lowest
-incongruence rate (12.8\%), whereas Museums had the highest (26.3\%). Relative
-to National Parks, museum reviews
-were 2.43 times more likely to be incongruent. Overall, the variation across
+incongruence rate (12.8\%), whereas Museums had the highest (26.3\%). Overall, the variation across
 venue types indicates that rating--text mismatch is not evenly distributed, but
 differs by review context.
 
@@ -400,55 +367,37 @@ their contribution is modest.
 \text{4) SHAP Analysis}
 SHAP analysis was employed as a post hoc interpretability tool to examine the contributions of individual features in the Random Forest model. As tree based models capture nonlinear relationships and feature interactions, their internal decision structure is not directly interpretable. SHAP provides a principled, model agnostic framework for attributing predictions to input features, enabling consistent and locally accurate explanations. Using SHAP, key predictors such as review length, reviewer expertise, travel year, review delay, and certain venue types (e.g., museums) were identified as influential. The results were broadly consistent with those of the logit model, while also indicating that some effects vary across contexts and interactions. Overall, SHAP provides complementary insights into nonlinear behavior, supporting rather than replacing the primary inferences derived from the statistical and predictive models.
 
-Temporal effects indicate a modest but consistent decline in sentiment–rating incongruence over time. The linear travel year term shows a significant negative association (Travel\_Year\_c: OR = 0.946, CI < 1), suggesting that more recent reviews are less likely to be incongruent. In contrast, the quadratic term (Travel\_Year\_c²: OR = 0.995) is not statistically significant, providing no evidence of nonlinear temporal effects and indicating an approximately linear trend. SHAP analysis further supports this finding, identifying Travel\_Year\_c as an influential predictor (mean |SHAP| = 0.0219) and confirming the overall direction of the effect.
+Temporal effects indicate a modest but consistent decline in sentiment–rating incongruence over time. The linear travel year term shows a significant negative association (Travel\_Year\_c: OR = 0.946, CI < 1), suggesting that more recent reviews are less likely to be incongruent. In contrast, the quadratic term (Travel\_Year\_c²: OR = 0.995) is not statistically significant, providing no evidence of nonlinear temporal effects and indicating an approximately linear trend. SHAP analysis further supports this finding, identifying Travel\_Year\_c as an influential predictor (mean |SHAP| = 0.0219) and confirming the overall direction of the effect.This suggests that, over time, reviewers are expressing their opinions more consistently, with written sentiment aligning more closely with their ratings.
 
 \section{Discussion}
 \subsection{Structured Incongruence}
-An incongruence rate of 18.6\% indicates that rating–text mismatch is not random noise, but a systematic and recurring phenomenon. This suggests that numerical ratings and textual sentiment often capture different dimensions of the user experience, rather than representing a single underlying evaluation. In particular, ratings appear to reflect an overall evaluative judgment, while textual sentiment provides a more detailed and expressive account of specific aspects of the experience.
-
-This divergence is likely influenced by context-dependent evaluation behavior. For example, certain attraction types, such as religious sites may elicit socially or culturally influenced ratings that remain high despite mixed or nuanced sentiment in the text. Conversely, attractions such as museums may involve complex, multi-dimensional experiences that are difficult to summarize with a single numerical score, leading to more frequent mismatch. These patterns suggest that the reliability of star ratings as sentiment proxies varies across contexts, and that assuming a direct alignment between ratings and sentiment may introduce systematic bias into sentiment analysis pipelines.
+An incongruence rate of 18.6\% shows that rating-text mismatch is systematic. Ratings capture overall judgments; text captures specific details.
+Evaluation patterns differ by context. Religious sites illustrate this: high ratings reflect cultural or spiritual weight, while text documents specific issues accessibility, pricing, operations. Museums show similar patterns through different factors. They involve layered experiences that resist a single score. A guest rates 3 stars while describing strong exhibits but flagging way finding problems and crowding.
+The implication is practical. Star ratings don't function equally across contexts as sentiment proxies. Using them without validation introduces systematic bias into your models. Ratings and textual sentiment capture different dimensions of experience. Treating them as interchangeable signals creates modeling risk.
 
 \subsection{Conservative Rating Behavior}
 
-The structured nature of incongruence is further reinforced by the dominance of the Conservative Rater pattern, which combines positive textual sentiment with moderate ratings and accounts for 38.4\% of all incongruent reviews. This pattern is particularly informative, as it reflects a tendency for reviewers to temper their ratings relative to the sentiment expressed in the text, rather than assigning ratings that fully align with their descriptive evaluations.
-
-Importantly, the prevalence of this pattern increases from 27.4\% among novice reviewers to 40.4\% among expert reviewers, suggesting that rating behavior evolves with experience. More experienced reviewers may apply stricter or more calibrated rating standards, reserving higher ratings for exceptional experiences while still expressing generally positive sentiment in the text. This behavior implies that incongruence is not merely an artifact of inconsistency, but may reflect intentional and systematic rating practices. As a result, positive experiences expressed through neutral ratings may be misclassified in sentiment-based models, highlighting the need to account for reviewer-level behavior when interpreting rating–text relationships.
-
+The Conservative Rater pattern further reinforces structural incongruence. Positive textual sentiment paired with moderate ratings accounts for 38.4\% of incongruent reviews. Reviewers temper their numerical scores relative to their written sentiment rather than align them fully.
+Prevalence of this pattern increases from 27.4\% (novice reviewers) to 40.4\% (expert reviewers), showing that rating behavior becomes more calibrated with experience. Experienced reviewers apply stricter standards, reserving high ratings for exceptional experiences while maintaining positive text sentiment. This indicates incongruence reflects deliberate practice, not inconsistency. In short, sentiment based models misclassify positive experiences expressed through moderate ratings. Accounting for reviewer expertise is critical when interpreting rating-text relationships.
 
 
 
 \subsection{Location Type as a Structural Moderator of Label Reliability}
-Location type plays a clear role in how well ratings reflect sentiment. Some attractions show much higher levels of mismatch than others. For example, compared with national parks, museum reviews are over twice as likely to be incongruent (Adjusted OR = 2.386), with similar trends observed for beaches, bodies of water, zoological gardens, and waterfalls.
+Location type plays a clear role in how well ratings reflect sentiment. Some attractions show much higher levels of mismatch than others. For example, compared with national parks, museum reviews are over twice as likely to be incongruent (Adjusted OR = 2.386), with similar trends observed for beaches, inland waterbodies, zoological gardens, and waterfalls.
 
 A simple interpretation is that certain attraction types are harder to evaluate with a single score. Experiences at museums or cultural sites are often more complex and multi-dimensional, which may lead reviewers to express mixed sentiment in text while assigning moderate or high ratings. In contrast, more straightforward experiences may produce closer alignment between ratings and sentiment.
 
 These findings suggest that the reliability of star ratings is context-dependent, rather than uniform across all review types. As a result, treating all ratings as equally reliable sentiment labels may introduce systematic bias, highlighting the need for more context aware sentiment modeling.
 
 \subsection{Complementary Roles of Linear and Nonlinear Models}
-The results indicate that linear and nonlinear models provide complementary
-perspectives on sentiment--rating incongruence rather than competing
-explanations. The logistic regression baseline achieved a test AUC of 0.584,
-providing a stable reference for linear predictive performance, while the
-explanatory logit model identified 19 statistically significant predictors and
-quantified their independent effects through adjusted odds ratios. The Random
-Forest model achieved a slightly higher test AUC of 0.6095, confirming the
-presence of nonlinear relationships and interaction effects. However, the
-modest improvement suggests that these nonlinearities are present but not
-dominant. Importantly, the overall predictive range (AUC $\approx 0.58$--$0.61$)
-should not be interpreted only as a modeling limitation. Instead, it suggests
-that incongruence is a structured but only partially observable phenomenon,
-with substantial variation likely driven by latent behavioral and contextual
-factors. SHAP provides supportive evidence by showing that predictors such as
-reviewer expertise, review length, and venue type can contribute in nonlinear
-and context-dependent ways. Taken together, these findings show that
-incongruence is not random, but its full explanation requires richer
-behavioral and contextual information than is available in the current feature
-set.
+
+
+The results show that linear and nonlinear models offer complementary insights into sentiment–rating incongruence rather than competing explanations. Logistic regression (AUC = 0.584) provides a stable baseline and identifies 19 significant predictors, while the Random Forest achieves a modest improvement (AUC = 0.6095), confirming the presence of nonlinear and interaction effects. However, the limited gain indicates that these nonlinearities are not dominant. The overall predictive range (AUC $\approx$ 0.58–0.61) suggests that incongruence is structured but only partially observable, with much of the variation driven by latent behavioral and contextual factors. SHAP analysis reinforces this interpretation by showing that variables such as reviewer expertise, review length, and venue type contribute in nonlinear and context-dependent ways, highlighting the need for richer features to fully explain the phenomenon.
 
 \subsection{Review Delay and Reviewer Expertise Effects }
-Review delay has a limited role in explaining sentiment--rating incongruence: it was not significant in bivariate analysis and showed only a weak negative logit association (OR = 0.960). In contrast, reviewer expertise has a clearer relationship with mismatch. As shown in Fig.~\ref{fig:reviewer_expertise_patterns}, experts show more Conservative Rater and less Harsh Deflator behavior than novices, suggesting that incongruence is driven more by reviewer behavior than by review timing.
 
- 
+Review delay plays a limited role in sentiment–rating incongruence, showing no significance in bivariate analysis and only a weak negative association (OR = 0.960). In contrast, reviewer expertise is more influential, with experts exhibiting more conservative and fewer harsh rating behaviors, indicating that incongruence is driven more by reviewer behavior than timing.
+
 
 
 \begin{figure}[htbp]
@@ -462,13 +411,11 @@ Review delay has a limited role in explaining sentiment--rating incongruence: it
 
 
 \section{Conclusion}
-This study demonstrates that sentiment–rating incongruence in tourism reviews is not random noise, but a structured and interpretable phenomenon shaped by reviewer behavior and contextual evaluation complexity. By integrating transformer-based sentiment inference with statistical modeling and interpretable machine learning, the analysis provides a unified framework for identifying and explaining mismatch patterns. The study contributes by introducing a structured typology of directional incongruence, quantifying its prevalence at scale, and linking it to key structural and behavioral drivers, including reviewer expertise, review characteristics, and location type. These findings show that ratings and textual sentiment often capture different dimensions of user experience, rather than serving as interchangeable signals.
-
-From a broader perspective, the results highlight important implications for both sentiment analysis and tourism analytics. Treating star ratings as ground truth labels without validation may introduce systematic bias into modeling pipelines. Instead, rating–text inconsistency should be understood as a meaningful behavioral signal that provides additional insight into how users evaluate and communicate their experiences.
-
-This study focuses on a large scale dataset from Sri Lanka, providing a detailed view of an underrepresented tourism context. While the findings are grounded in this setting, the proposed framework and observed patterns are likely transferable to similar review-based platforms. In addition, the use of structured features and model-derived sentiment labels enables scalable analysis, though further incorporation of richer semantic representations may enhance explanatory depth.
-
-Future research can extend this work across domains and settings to test generality, and incorporate richer contextual and linguistic features to better understand sentiment–rating divergence and improve reliable sentiment modeling.
+Sentiment-rating incongruence in tourism reviews is not random. The patterns we found are consistent and explainable. Reviewers approach rating and reviewing differently. Context shapes how they evaluate. Using transformer-based sentiment analysis with statistical and interpretable machine learning, we identified what drives the mismatch.
+The study reveals three key findings. First, we mapped different types of incongruence and measured how common they are. Second, we traced them back to reviewer expertise, review length and depth, and location type. Third, ratings and textual sentiment capture different aspects of the guest experience. They are not interchangeable signals.
+For practice, the takeaway is straightforward. Treating star ratings as ground truth without checking introduces bias. Rating-text misalignment is not noise to ignore. It is a signal. It shows how guests actually experienced and articulated their stay.
+We analyzed a large dataset from Sri Lanka, a tourism market that research overlooks. The framework likely transfers to other review platforms using similar structure. The approach scales well with structured features and machine-derived sentiment labels, though deeper semantic analysis could reveal more.
+The work opens two directions: test whether these patterns hold in other domains and contexts, and integrate richer linguistic and contextual features to better explain sentiment-rating divergence.
 
  
 

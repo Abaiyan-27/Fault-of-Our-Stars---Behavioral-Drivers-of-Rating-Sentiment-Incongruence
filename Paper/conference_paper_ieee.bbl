@@ -74,16 +74,16 @@ T.~Ali, S.~Wang, M.~Y. Lee, and M.~A. Ahmed, ``Analyzing tourism reviews using
   an lda topic-based sentiment analysis approach,'' \emph{MethodsX}, vol.~9, p.
   101894, Nov. 2022.
 
-\bibitem{abeysinghe}
-P.~Abeysinghe and T.~Bandara, ``A novel self-learning approach to overcome
-  incompatibility on tripadvisor reviews,'' \emph{Data Science and Management},
-  vol.~5, pp. 1--10, 2022.
-
 \bibitem{walgampaya}
 H.~P. P.~M. Abeysinghe and C.~K. Walgampaya, ``Sentiment analysis in user
   reviews: A study of incompatibility in hotel reviews in city of anuradhapura,
   sri lanka,'' in \emph{Proceedings of iPURSE 2021}, vol.~23, Peradeniya, Sri
   Lanka, Nov. 2021.
+
+\bibitem{abeysinghe}
+P.~Abeysinghe and T.~Bandara, ``A novel self-learning approach to overcome
+  incompatibility on tripadvisor reviews,'' \emph{Data Science and Management},
+  vol.~5, pp. 1--10, 2022.
 
 \bibitem{Chua}
 A.~Y.~K. Chua and S.~Banerjee, ``Understanding review helpfulness as a function

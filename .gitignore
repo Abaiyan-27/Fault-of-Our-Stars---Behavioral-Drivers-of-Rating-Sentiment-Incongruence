@@ -96,5 +96,4 @@ temp/
 *.synctex.gz
 *.toc
 *.out
-*.pdf
 .codex

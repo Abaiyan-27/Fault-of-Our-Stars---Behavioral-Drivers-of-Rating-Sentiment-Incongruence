@@ -77,7 +77,7 @@ interpretability by linking sentiment to specific experience components
 feasibility of analyzing under-studied datasets with limited labeled data
 \cite{Nawawi}.
 
-This inconsistency appears in regional literature as well. Abeysinghe and Walgampaya \cite{walgampaya} document rating–text incompatibility in hotel reviews in Anuradhapura, while Abeysinghe and Bandara \cite{abeysinghe} extend this finding across five Sri Lankan cities. Both depend on lexicon-based methods and frame mismatch mainly as a correction problem. In contrast, this study uses transformer-based sentiment analysis and interprets incongruence as a context-dependent NLP weak-label reliability issue.
+This inconsistency appears in regional literature as well. Abeysinghe and Walgampaya \cite{walgampaya} document rating–text incompatibility in hotel reviews in Anuradhapura, while Abeysinghe and Bandara \cite{abeysinghe} extend this finding across five Sri Lankan cities. Both rely on lexicon-based methods and frame mismatch mainly as a correction problem. In contrast, this study uses transformer-based sentiment analysis and interprets incongruence as a context-dependent NLP weak-label reliability issue.
 
 Empirical findings on the relationship between ratings and review text remain
 mixed. Bigne et al. \cite{Bigne} report general alignment between the two, but also
@@ -109,7 +109,7 @@ Overall, sentiment–rating incongruence remains insufficiently understood in to
 \textbf{Ph.} & \textbf{Stage} & \textbf{Method / Tool} & \textbf{Output} \\
 \midrule
 1 & Dataset and Preprocessing       & Rule-based normalization, Feature engineering          & Clean review dataset \\
-2 & Sentiment Model Selection    & Comparative evaluation of RoBERTa variants on 1,000 manually labeled reviews; textual sentiment inferred independently from ratings & Best performing model selected for full dataset sentiment prediction \\
+2 & Sentiment Model Selection    & Comparative evaluation of RoBERTa variants on 1,000 manually labeled reviews; textual sentiment inferred independently from ratings & Best-performing model selected for full dataset sentiment prediction \\
 3 & Variable Construction   & Derived from model output and reviewer data            & Incongruence flag, Pattern type, Reviewer tier \\
 4 & Statistical Testing and Predictive Modeling            & Chi-square, Mann--Whitney U, Logit, Random Forest, SHAP & Secondary explanatory factors and effect sizes \\
 \bottomrule
@@ -125,7 +125,7 @@ The study used the ``Tourism and Travel Reviews: Sri Lankan Destinations'' datas
     \item Neutral (3$\star$)
     \item Positive (4--5$\star$)
 \end{itemize}
-This grouping follows common practice in sentiment analysis~\cite{Pang,alaei} and makes the rating scale directly comparable with the three-class sentiment output. Table~\ref{tab:dataset_attributes} presents the source columns used to build the analytical dataset and only the relevant columns used in analysis are presented. This preprocessing ensured that the sentiment labels, rating classes, temporal variables, and reviewer-level features were constructed consistently before modeling rating--text divergence.
+This grouping follows common practice in sentiment analysis~\cite{Pang,alaei} and makes the rating scale directly comparable with the three-class sentiment output. Table~\ref{tab:dataset_attributes} lists the source columns retained for analysis. This preprocessing ensured that the sentiment labels, rating classes, temporal variables, and reviewer-level features were constructed consistently before modeling rating--text divergence.
 
 \begin{table}[htbp]
 \caption{Source Columns Used in Analysis}
@@ -215,7 +215,7 @@ SHAP (post hoc)          & Explains model predictions      & Mean $|\phi|$ & Tre
 
 Each incongruence type reflects a directional mismatch between rating and sentiment polarity. Pattern names were derived from their defining characteristics: \textit{Conservative Rater} pairs positive sentiment with neutral ratings; \textit{Obligatory 5-Star} pairs neutral sentiment with positive ratings; \textit{Frustrated Neutral} pairs negative sentiment with neutral ratings; \textit{Polite Inflator} pairs negative sentiment with positive ratings; \textit{Harsh Deflator} pairs neutral sentiment with negative ratings; and \textit{Punitive Rater} pairs positive sentiment with negative ratings.
 
-Among the reviews analyzed, 3,005 were identified as incongruent, giving an overall prevalence of 18.6\%, or roughly one in five reviews. Fig.~\ref{fig:incongruence_patterns} shows that incongruence follows a six-pattern typology. The two most common patterns, \textit{Conservative Rater} (38.4\%) and \textit{Obligatory 5-Star} (28.3\%), together account for 66.7\% of all incongruent reviews. In addition, \textit{Frustrated Neutral} and \textit{Polite Inflator} account for a further 24.2\% of incongruent cases, showing that negative textual sentiment is often paired with non-negative ratings. This directional structure indicates that rating-derived labels introduce systematic, rather than random, noise into sentiment analysis tasks. The dominance of a few directional patterns also suggests that incongruence follows repeated linguistic-rating behaviors rather than isolated annotation errors. This makes the pattern typology useful for interpreting how numerical ratings and written sentiment diverge in review-mining datasets.
+Among the reviews analyzed, 3,005 were identified as incongruent, giving an overall prevalence of 18.6\%, or roughly one in five reviews. Fig.~\ref{fig:incongruence_patterns} shows that incongruence follows a six-pattern typology. The two most common patterns, \textit{Conservative Rater} (38.4\%) and \textit{Obligatory 5-Star} (28.3\%), together account for 66.7\% of all incongruent reviews. In addition, \textit{Frustrated Neutral} and \textit{Polite Inflator} account for a further 24.2\% of incongruent cases, showing that negative textual sentiment is often paired with non-negative ratings. This directional structure indicates that rating-derived labels introduce systematic, rather than random, noise into sentiment analysis tasks. The dominance of a few directional patterns also suggests that incongruence follows repeated rating–language patterns rather than isolated annotation errors. This makes the pattern typology useful for interpreting how numerical ratings and written sentiment diverge in review-mining datasets.
 
 \begin{figure}[htbp]
 \centering

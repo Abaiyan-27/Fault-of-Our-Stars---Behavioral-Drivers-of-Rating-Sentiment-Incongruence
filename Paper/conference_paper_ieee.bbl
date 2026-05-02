@@ -49,16 +49,6 @@ B.~Kwon, J.~Lee, J.~Min, C.~Kwak, and H.~B.~S. Choi, ``Beyond the stars: The
   \emph{Asia Pacific Journal of Information Systems}, vol.~35, no.~1, pp.
   49--72, 2025.
 
-\bibitem{Wen}
-Y.~Wen, Y.~Lin, C.~Wang, H.~Zhou, X.~Yi, and X.~Liang, ``Sentiment analysis of
-  hotel online reviews using the bert model and ernie model---data from
-  china,'' \emph{PLOS ONE}, vol.~18, no.~3, p. e0275382, Mar. 2023.
-
-\bibitem{Puh}
-K.~Puh and M.~B. Babac, ``Predicting sentiment and rating of tourist reviews
-  using machine learning,'' \emph{Journal of Hospitality and Tourism Insights},
-  vol.~6, no.~3, pp. 1188--1204, 2023.
-
 \bibitem{Ameur}
 A.~Ameur, S.~Aliane, Y.~Bouguila, and S.~Wang, ``Sentiment analysis for hotel
   reviews: A systematic literature review,'' \emph{ACM Computing Surveys},
@@ -73,6 +63,38 @@ M.~Chu, Y.~Xiao, Y.~Liu, L.~Tian, and H.~Wang, ``Language interpretation in
 T.~Ali, S.~Wang, M.~Y. Lee, and M.~A. Ahmed, ``Analyzing tourism reviews using
   an lda topic-based sentiment analysis approach,'' \emph{MethodsX}, vol.~9, p.
   101894, Nov. 2022.
+
+\bibitem{Wen}
+Y.~Wen, Y.~Lin, C.~Wang, H.~Zhou, X.~Yi, and X.~Liang, ``Sentiment analysis of
+  hotel online reviews using the bert model and ernie model---data from
+  china,'' \emph{PLOS ONE}, vol.~18, no.~3, p. e0275382, Mar. 2023.
+
+\bibitem{Puh}
+K.~Puh and M.~B. Babac, ``Predicting sentiment and rating of tourist reviews
+  using machine learning,'' \emph{Journal of Hospitality and Tourism Insights},
+  vol.~6, no.~3, pp. 1188--1204, 2023.
+
+\bibitem{Devlin}
+J.~Devlin, M.-W. Chang, K.~Lee, and K.~Toutanova, ``Bert: Pre-training of deep
+  bidirectional transformers for language understanding,'' in \emph{Proceedings
+  of the 2019 Conference of the North American Chapter of the Association for
+  Computational Linguistics: Human Language Technologies, Volume 1 (Long and
+  Short Papers)}, Minneapolis, MN, USA, Jun. 2019, pp. 4171--4186.
+
+\bibitem{Sun}
+Y.~Sun, S.~Wang, Y.~Li, S.~Feng, H.~Tian, H.~Wu, and H.~Wang, ``Ernie: Enhanced
+  representation through knowledge integration,'' \emph{arXiv preprint
+  arXiv:1904.09223}, 2019.
+
+\bibitem{Sewwandi}
+T.~Sewwandi, ``Tourism and travel reviews: Sri lankan destinations,'' Mendeley
+  Data, V1, 2023.
+
+\bibitem{Nawawi}
+I.~Nawawi, A.~Ismail, M.~M. Salleh, and F.~A. Rahman, ``Exploring tourist
+  experience through online reviews using aspect-based sentiment analysis with
+  zero-shot learning for hospitality service enhancement,'' \emph{Information},
+  vol.~15, no.~8, p. 499, Aug. 2024.
 
 \bibitem{walgampaya}
 H.~P. P.~M. Abeysinghe and C.~K. Walgampaya, ``Sentiment analysis in user
@@ -90,27 +112,5 @@ A.~Y.~K. Chua and S.~Banerjee, ``Understanding review helpfulness as a function
   of reviewer reputation, review rating, and review depth,'' \emph{Journal of
   the Association for Information Science and Technology}, vol.~66, no.~2, pp.
   354--362, 2015.
-
-\bibitem{Devlin}
-J.~Devlin, M.-W. Chang, K.~Lee, and K.~Toutanova, ``Bert: Pre-training of deep
-  bidirectional transformers for language understanding,'' in \emph{Proceedings
-  of the 2019 Conference of the North American Chapter of the Association for
-  Computational Linguistics: Human Language Technologies, Volume 1 (Long and
-  Short Papers)}, Minneapolis, MN, USA, Jun. 2019, pp. 4171--4186.
-
-\bibitem{Sun}
-Y.~Sun, S.~Wang, Y.~Li, S.~Feng, H.~Tian, H.~Wu, and H.~Wang, ``Ernie: Enhanced
-  representation through knowledge integration,'' \emph{arXiv preprint
-  arXiv:1904.09223}, 2019.
-
-\bibitem{Nawawi}
-I.~Nawawi, A.~Ismail, M.~M. Salleh, and F.~A. Rahman, ``Exploring tourist
-  experience through online reviews using aspect-based sentiment analysis with
-  zero-shot learning for hospitality service enhancement,'' \emph{Information},
-  vol.~15, no.~8, p. 499, Aug. 2024.
-
-\bibitem{Sewwandi}
-T.~Sewwandi, ``Tourism and travel reviews: Sri lankan destinations,'' Mendeley
-  Data, V1, 2023.
 
 \end{thebibliography}

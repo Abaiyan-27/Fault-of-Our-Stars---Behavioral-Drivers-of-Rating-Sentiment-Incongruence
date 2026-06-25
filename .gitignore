@@ -109,4 +109,4 @@ country_resolution_cache.csv
 *.synctex.gz
 *.toc
 *.out
-*.pdf
+.codex

@@ -71,6 +71,7 @@ env.bak/
 venv.bak/
 
 # IDE
+.codex
 .vscode/
 .idea/
 *.swp
@@ -84,12 +85,24 @@ Thumbs.db
 *.xls
 *.json
 large_data/
-data/
+data/cache/
+data/interim/
+data/processed/
 output/
+outputs/
 temp/
+
+# Generated analysis outputs
+fig*.png
+paper/fig*.png
+Processed_Reviews*.csv
+processed_tourism_reviews*.csv
+country_resolution_cache.csv
 
 # LaTeX build artifacts
 *.aux
+*.bbl
+*.blg
 *.fdb_latexmk
 *.fls
 *.log

@@ -1,0 +1,33 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "tourism-review-analysis"
+version = "0.1.0"
+description = "Feature engineering and modelling pipeline for Sri Lankan tourism review sentiment-rating incongruence research."
+readme = "README.md"
+requires-python = ">=3.10,<3.13"
+dependencies = [
+    "pandas==2.2.2",
+    "numpy==2.1.1",
+    "matplotlib==3.9.2",
+    "seaborn==0.13.2",
+    "scikit-learn==1.5.2",
+    "scipy==1.14.1",
+    "shap==0.46.0",
+    "statsmodels==0.14.2",
+    "torch==2.4.1",
+    "transformers==4.44.2",
+    "sentence-transformers==3.1.1",
+    "bertopic==0.17.4",
+    "tqdm==4.66.5",
+    "pycountry==22.4.0",
+    "geopy==2.4.1",
+]
+
+[project.scripts]
+tourism-review-analysis = "tourism_review_analysis.pipeline:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]

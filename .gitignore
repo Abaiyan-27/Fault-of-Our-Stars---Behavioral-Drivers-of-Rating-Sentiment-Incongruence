@@ -91,6 +91,7 @@ data/processed/
 output/
 outputs/
 temp/
+finetuned_*/
 
 # Generated analysis outputs
 fig*.png
@@ -98,6 +99,8 @@ paper/fig*.png
 Processed_Reviews*.csv
 processed_tourism_reviews*.csv
 country_resolution_cache.csv
+*_predictions.csv
+tripadvisor_test_predictions.csv
 
 # LaTeX build artifacts
 *.aux
@@ -109,4 +112,4 @@ country_resolution_cache.csv
 *.synctex.gz
 *.toc
 *.out
-.codex
+*.pdf

@@ -12,6 +12,7 @@
 \usepackage{microtype}
 \usepackage[hidelinks]{hyperref}
 \usepackage{placeins}
+\graphicspath{{../outputs/figures/}}
 
 \setlength{\textfloatsep}{8pt plus 1pt minus 2pt}
 \setlength{\dbltextfloatsep}{8pt plus 1pt minus 2pt}
@@ -301,7 +302,6 @@ SHAP was used as a post hoc interpretation layer for the Random Forest model to 
 
 Temporal effects indicate a modest but consistent decline in sentiment–rating incongruence over time. The linear travel year term shows a significant negative association (Travel\_Year\_c: OR = 0.946, CI < 1), suggesting that more recent reviews are less likely to be incongruent. In contrast, the quadratic term (Travel\_Year\_c²: OR = 0.995) is not statistically significant, providing no evidence of nonlinear temporal effects and indicating an approximately linear trend. SHAP analysis further supports this finding, identifying Travel\_Year\_c as an influential predictor (mean |SHAP| = 0.0219) and confirming the overall direction of the effect. This suggests that, over time, reviewers are expressing their opinions more consistently, with written sentiment aligning more closely with their ratings.
 
-<<<<<<< HEAD:paper/conference_paper_ieee.tex
 \textbf{Review characteristics:} Review length (OR = 1.219) has a significant positive association. Review delay (OR = 0.960) is weak and marginal.
 
 \textbf{Temporal trend:} Travel year (OR = 0.946) is significant, while the quadratic term is non-significant.
@@ -325,8 +325,6 @@ Venue-specific effects display nonlinear threshold behaviour. For example, the p
 Additionally, the spread of SHAP values for key features such as review length and reviewer tier indicates interaction effects, where the impact of a feature varies depending on other contextual variables. These nonlinear and interaction patterns explain the modest performance improvement of the Random Forest over the logistic regression.
 
 Importantly, SHAP complements rather than replaces the logit model: The logit establishes statistical significance and effect size, while SHAP reveals how these effects manifest in nonlinear, context-dependent behavioural patterns. The generated SHAP plots are intentionally omitted from the release repository and can be regenerated from the analysis notebook when needed.
-=======
->>>>>>> c82f588f654c0555852e14648b610a1208760cc8:Paper/conference_paper_ieee.tex
 
 \section{Discussion}
 \subsection{Structured Incongruence}

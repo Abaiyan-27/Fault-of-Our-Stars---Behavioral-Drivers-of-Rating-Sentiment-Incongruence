@@ -1,7 +1,12 @@
 """Generate Figure: Distribution of six directional incongruence patterns."""
 
 from pathlib import Path
+import os
+import tempfile
 
+os.environ.setdefault(
+    "MPLCONFIGDIR", str(Path(tempfile.gettempdir()) / "matplotlib")
+)
 import matplotlib.pyplot as plt
 
 
@@ -64,7 +69,7 @@ def main() -> None:
         )
 
     fig.tight_layout()
-    output_folder = Path(__file__).resolve().parents[1] / "Paper"
+    output_folder = Path(__file__).resolve().parents[1] / "outputs" / "figures"
     output_folder.mkdir(parents=True, exist_ok=True)
     fig.savefig(output_folder / "fig_incongruence_patterns.png", dpi=300, bbox_inches="tight")
     fig.savefig(output_folder / "fig_incongruence_patterns.pdf", dpi=300, bbox_inches="tight")
